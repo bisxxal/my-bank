@@ -1,24 +1,50 @@
 'use client'
 import { createTransaction } from '@/actions';
+import useNetworkStatus from '@/hooks/oflinehook';
 import { toastError, toastSuccess } from '@/lib/toast';
 import { banks, categories } from '@/lib/utils';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { Loader } from 'lucide-react';
-import React, { useState } from 'react'
+import React, {   useState } from 'react'
 import DatePicker from 'react-datepicker';
 
 const CreateTransaction = () => {
-  const [type , setType] = useState<'credit' | 'debit'>('debit');
-  const queryClient = useQueryClient();
+
+  const { isOnline } = useNetworkStatus()
+  const [type, setType] = useState<'credit' | 'debit'>('debit');
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  
+
   const handelFormSubmit = (formData: FormData) => {
-    if(selectedDate){
-      formData.set('date2', selectedDate); 
+    if (selectedDate) {
+      formData.set('date2', selectedDate.toISOString());
+ 
+      if (!isOnline) {
+        const newEntry = {
+          amount: formData.get('amount'),
+          type: formData.get('type'),
+          bank: formData.get('bank'),
+          category: formData.get('category') as string,
+          send: formData.get('send'),
+          date: selectedDate,
+        };
+
+        let existing = JSON.parse(localStorage.getItem('payment-to-be-sync') || "[]");
+
+        if (!Array.isArray(existing)) {
+          existing = [existing];
+        }
+
+        existing.push(newEntry);
+
+        localStorage.setItem('payment-to-be-sync', JSON.stringify(existing));
+
+        toastSuccess('You are offline. Transaction saved locally.');
+        return;
+      }
       CreateMutation.mutate(formData);
     }
-  }
-
+  };
+ 
   const CreateMutation = useMutation({
     mutationFn: async (fromData: FormData) => {
       return await createTransaction(fromData);
@@ -44,13 +70,13 @@ const CreateTransaction = () => {
           <input required
             type="number"
             name="amount"
-            className={` ${type==='credit'? "text-green-500" :"text-red-500"} mt-1 font-bold  block w-full border bordercolor card p-2 rounded-md shadow-sm  `}
+            className={` ${type === 'credit' ? "text-green-500" : "text-red-500"} mt-1 font-bold  block w-full border bordercolor card p-2 rounded-md shadow-sm  `}
             placeholder="Enter amount"
           />
         </div>
         <div>
           <label className="block text-sm font-medium ">Transaction</label>
-          <select onChange={(e)=>setType(e.target.value as 'credit' | 'debit')} required
+          <select onChange={(e) => setType(e.target.value as 'credit' | 'debit')} required
             name='type'
             className="mt-1 block w-full border bordercolor card p-2 rounded-md shadow-sm "
           >
@@ -65,17 +91,17 @@ const CreateTransaction = () => {
             className="mt-1 block w-full border bordercolor card p-2 rounded-md shadow-sm "
           >
             <option value="">Select bank</option>
-             {
-              banks.map((i)=>{
-                return(
+            {
+              banks.map((i) => {
+                return (
                   <option key={i.value} value={i.value}>{i.name}</option>
                 )
               })
-             }
+            }
           </select>
         </div>
 
-       { type === 'debit' && <div>
+        {type === 'debit' && <div>
           <label className="block text-sm font-medium ">Category</label>
           <select name='category'
             className="mt-1 block w-full border bordercolor card p-2 rounded-md shadow-sm "
@@ -89,9 +115,9 @@ const CreateTransaction = () => {
           </select>
         </div>}
 
-       <div>
+        <div>
           <label className="block text-sm font-medium ">
-            {type === 'credit' ? 'Who sends you ' : 'Send On ' }  </label>
+            {type === 'credit' ? 'Who sends you ' : 'Send On '}  </label>
           <input
             type="text"
             name='send'
@@ -109,7 +135,7 @@ const CreateTransaction = () => {
             calendarClassName='  customclass '
             popperClassName="customclass2"
             onChange={(date: Date | null) => {
-              setSelectedDate(date); 
+              setSelectedDate(date);
             }}
             selectsStart
             className="border-2 bordercolor placeholder:text-xs w-[150px] center max-md:w-[120px] rounded-xl px-2 py-1 card text-white"

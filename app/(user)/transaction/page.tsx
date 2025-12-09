@@ -1,29 +1,29 @@
 'use client';
-import { deleteTransaction, getTransactionsBySelected } from '@/actions';
+import { deleteTransaction, OflineSyncTransaction } from '@/actions';
 import DateButton from '@/components/dateButton';
 import Loading from '@/components/ui/loading';
 import SwipeRevealActions from '@/components/ui/swipeToDelete';
+import useNetworkStatus from '@/hooks/oflinehook';
 import { useGetAllPaymemts } from '@/hooks/payments';
 import { getLabelForDate } from '@/lib/dateformat';
 import { toastError, toastSuccess } from '@/lib/toast';
 import { TransactionTypeProps } from '@/lib/types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { endOfMonth, startOfMonth } from 'date-fns';
-import { ArrowDownLeft, ArrowDownRight, RefreshCcw, TrendingDown, TrendingUp } from 'lucide-react';
+import { ArrowDownLeft, ArrowDownRight, RefreshCcw, RefreshCw, TrendingDown, TrendingUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
 
 const TransactionPage = () => {
+  const { isOnline } = useNetworkStatus()
   const router = useRouter();
   const today = new Date();
-  const queryClient = useQueryClient();
   const [startDate, setStartDate] = useState<Date>(startOfMonth(today));
   const [endDate, setEndDate] = useState<Date>(endOfMonth(today));
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<string | null>(null);
   const [borrow, setBorrow] = useState([])
 
-   
-  const { data, isLoading ,refetch } = useGetAllPaymemts(startDate, endDate);
+  const { data, isLoading, refetch } = useGetAllPaymemts(startDate, endDate);
 
   const groupedMessages = data?.reduce((acc: Record<string, typeof data>, msg: TransactionTypeProps) => {
     const label = getLabelForDate(String(msg?.date ?? ''));
@@ -39,7 +39,7 @@ const TransactionPage = () => {
     onSuccess: (data) => {
       if (data.status === 200) {
         toastSuccess('Transaction deleted successfully');
-        queryClient.invalidateQueries({ queryKey: ['trackerData'] });
+        refetch();
       }
     },
 
@@ -119,33 +119,66 @@ const TransactionPage = () => {
     setOpenItemId(id);
   };
 
-useEffect(() => {
-  const data = localStorage.getItem('lastBorrowType');
-  if (!data) return;
+  useEffect(() => {
+    const data = localStorage.getItem('lastBorrowType');
+    if (!data) return;
 
-  let br;
-  try {
-    br = JSON.parse(data);
-  } catch (err) {
-    return;
-  }
-  const totals = br.reduce(
-    (acc: { toBePaid: number; toBeReceived: number }, curr: { type: string; amount: number }) => {
-      if (curr.type === 'To be paid') {
-        acc.toBePaid += curr.amount;
-      } else if (curr.type === 'To be received') {
-        acc.toBeReceived += curr.amount;
+    let br;
+    try {
+      br = JSON.parse(data);
+    } catch (err) {
+      return;
+    }
+    const totals = br.reduce(
+      (acc: { toBePaid: number; toBeReceived: number }, curr: { type: string; amount: number }) => {
+        if (curr.type === 'To be paid') {
+          acc.toBePaid += curr.amount;
+        } else if (curr.type === 'To be received') {
+          acc.toBeReceived += curr.amount;
+        }
+        return acc;
+      },
+      { toBePaid: 0, toBeReceived: 0 }
+    );
+
+    setBorrow(totals);
+  }, []);
+
+  useEffect(() => {
+ 
+    if (isOnline) {
+      
+      let existing = JSON.parse(localStorage.getItem('payment-to-be-sync') || "[]");
+      if (!Array.isArray(existing) || existing.length === 0  ) {
+        return;
       }
-      return acc;
-    },
-    { toBePaid: 0, toBeReceived: 0 }
-  );
+      CreateMutation.mutate(existing);
+    }
 
-  setBorrow(totals);
-}, []);
+  }, [isOnline])
+
+  const CreateMutation = useMutation({
+    mutationFn: async (newEntry: string[]) => {
+      return await OflineSyncTransaction(newEntry);
+    },
+    onSuccess: (data) => {
+      if (data.status === 200) {
+        localStorage.removeItem('payment-to-be-sync');
+        toastSuccess('Transaction synced successfully');
+        refetch();
+      }
+    },
+    onError: (error) => {
+      toastError('Failed to create transaction');
+    },
+  });
 
   return (
     <div className='mt-[100px] relative w-full min-h-screen pb-20'>
+
+      {CreateMutation.isPending && <div className=' center text-sm border border-[#ffffff1e] gap-2 w-fit text-[#ffffff58] mx-auto rounded-2xl px-3 py-1'>
+        <RefreshCw className='animate-spin' size={18}/> <p> Syncing your offline data...</p>
+      </div>}
 
       {showDeleteConfirmation !== null && <div className=' bg-[#00000023] z-[10] top-10 fixed center backdrop-blur-[10px] w-full h-full'>
         <div className=' bg-[#26253897] w-fit mx-auto mt-20 p-6 rounded-3xl shadow-lg'>
@@ -169,25 +202,25 @@ useEffect(() => {
           </div>
         </div>
       </div>}
-      <h1 className="text-center flex flex-col font-semibold text-lg mt-6 ">Your Total Transactions  {data?.length} 
+      <h1 className="text-center flex flex-col font-semibold text-lg mt-6 ">Your Total Transactions  {data?.length}
       </h1>
       <div className="flex flex-col gap-4 px-14 max-md:px-2.5 pt-5">
 
-        <div className=' w-full gap-3 flex items-center max-md:justify-end justify-center pl-2'> 
-        <DateButton startDate={startDate} endDate={endDate} setStartDate={setStartDate} setEndDate={setEndDate} />
-        <div>
-         {
-          borrow && <button className=' px-4 py-2 rounded-lg ' onClick={() => router.push('/borrow')}>
-            {borrow?.toBePaid > 0 && <span className='center text-red-600 font-semibold  text-sm'> <ArrowDownRight size={20}/> {borrow.toBePaid.toFixed(2)} </span>}
-            {borrow?.toBeReceived > 0 && <span className='center mt-1 text-green-600 font-semibold text-sm'><ArrowDownLeft size={20}/> {borrow.toBeReceived.toFixed(2)} </span>}
-          </button>
-         }
-         <div>
-          <button onClick={()=>refetch()} className=' buttonbg p-2 rounded-3xl px-5 '>
-         <RefreshCcw />
-          </button>
-         </div>
-        </div>
+        <div className=' w-full gap-3 flex items-center max-md:justify-end justify-center pl-2'>
+          <DateButton startDate={startDate} endDate={endDate} setStartDate={setStartDate} setEndDate={setEndDate} />
+          <div>
+            {
+              borrow && <button className=' px-4 py-2 rounded-lg ' onClick={() => router.push('/borrow')}>
+                {borrow?.toBePaid > 0 && <span className='center text-red-600 font-semibold  text-sm'> <ArrowDownRight size={20} /> {borrow.toBePaid.toFixed(2)} </span>}
+                {borrow?.toBeReceived > 0 && <span className='center mt-1 text-green-600 font-semibold text-sm'><ArrowDownLeft size={20} /> {borrow.toBeReceived.toFixed(2)} </span>}
+              </button>
+            }
+            <div>
+              <button onClick={() => refetch()} className=' buttonbg p-2 rounded-3xl px-5 '>
+                <RefreshCcw />
+              </button>
+            </div>
+          </div>
 
         </div>
         {uniqueBanks && !isLoading ?
@@ -207,9 +240,9 @@ useEffect(() => {
               );
             })}
           </div> : isLoading ?
-          <div className='flex w-full hidescrollbar overflow-x-auto '>
-            <Loading boxes={3} child="h-28 max-md:min-w-[200px] min-w-[250px] h-[150px] !rounded-3xl " parent="w-full !flex-row px-0   !justify-start " />  </div> : <p>No Data found</p>
-          
+            <div className='flex w-full hidescrollbar overflow-x-auto '>
+              <Loading boxes={3} child="h-28 max-md:min-w-[200px] min-w-[250px] h-[150px] !rounded-3xl " parent="w-full !flex-row px-0   !justify-start " />  </div> : <p>No Data found</p>
+
         }
 
         {groupedMessages && Object.entries(groupedMessages).length !== 0 && !isLoading ? Object?.entries(groupedMessages).map(([label, group]) => (
@@ -236,7 +269,7 @@ useEffect(() => {
                     {msg?.spendsOn && <p><strong> {msg.type === 'credit' ? ' Recived on ' : ' Spends On '}   :</strong> {msg.spendsOn}</p>}
                     {msg?.category && <p><strong>Category:</strong> {msg.category}</p>}
                     <p><strong>Date:</strong>
-                       {new Date(msg.date).toLocaleString('en-US', {
+                      {new Date(msg.date).toLocaleString('en-US', {
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',
@@ -244,7 +277,7 @@ useEffect(() => {
                         minute: '2-digit',
                         second: '2-digit',
                         hour12: true
-                      })} 
+                      })}
                     </p>
                   </div>
                 </div>

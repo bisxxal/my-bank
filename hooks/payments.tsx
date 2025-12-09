@@ -18,7 +18,6 @@ export const useGetAllPaymemts = (startDate: Date, endDate: Date) => {
           if (parsed.rangeKey === rangeKey) {
             setLocalData(parsed.data);
           } else {
-            // cached data is for a different range — don't use it
             setLocalData(null);
           }
         } else {
@@ -52,8 +51,6 @@ export const useGetAllPaymemts = (startDate: Date, endDate: Date) => {
       setLocalData(fetched);
       return fetched;
     },
-    // Only auto-run the query if we've finished checking local storage and we have no usable localData.
-    // If localData === null, that means either no cache or cache is for a different range.
     enabled: !isCheckingLocal && localData === null,
   });
   useEffect(() => {
@@ -62,24 +59,20 @@ export const useGetAllPaymemts = (startDate: Date, endDate: Date) => {
     }
   }, [data]);
 
-  // If user changes startDate/endDate and we have a different storedRangeKey, trigger refetch.
   useEffect(() => {
-    // Only try refetching after initial local check finished
+
     if (!isCheckingLocal) {
       if (storedRangeKey !== rangeKey) {
-        // Clear localData so UI can show loading if needed, then refetch
+
         setLocalData(null);
-        // call refetch to fetch new range
+
         refetch().catch(() => {
-          /* handle / ignore errors; react-query will keep its state */
         });
-      } else {
-        // If storedRangeKey === rangeKey, localData should already be set by the mount effect,
-        // so no fetch required.
       }
     }
   }, [rangeKey, isCheckingLocal, storedRangeKey, refetch]);
 
+  
   return {
     data: localData,
     isLoading: isCheckingLocal || (localData === null && isLoading),

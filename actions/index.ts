@@ -5,7 +5,7 @@ import { getServerSession } from "next-auth";
  
 export async function getTransactionsBySelected(startDate: Date, endDate: Date) {
 
-  console.log("request comming")
+  // console.log("request comming")
   const session = await getServerSession(authOptions);
   if (!session) {
     return { status: 400, message: "User not authenticated" };
@@ -35,7 +35,7 @@ export async function getTransactionsBySelected(startDate: Date, endDate: Date) 
     orderBy: { date: "desc" },
   });
 
-  console.log("total data 🤖" , transactions.length)
+  // console.log("total data 🤖" , transactions.length)
   return transactions;
 }
 
@@ -66,7 +66,6 @@ export async function createTransaction(formData: FormData) {
   const type = formData.get('type') as string;
   const bank = formData.get('bank') as string;
   const category = formData.get('category') as string;
-  const spendsOn = formData.get('spendsOn') as string;
   const send = formData.get('send') as string;
   const date = new Date(formData.get('date2') as string);
 
@@ -366,4 +365,49 @@ export async function deleteBrrow(id: string) {
   } catch (error) {
     
   }
+}
+
+
+export async function OflineSyncTransaction(newEntry: any[]) {
+ 
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    return { status: 400, message: "User not authenticated" };
+  }
+ 
+  const validData = [];
+
+  for (const entry of newEntry) {
+    const amount = parseInt(entry.amount as string);
+    const bank = entry.bank as string;
+    const type = entry.type as string;
+    const category = entry.category as string;
+    const send = entry.send as string;
+    const date = new Date(entry.date);
+ 
+    if (!amount || !type || !bank || !date) continue;
+
+    validData.push({
+      amount,
+      type,
+      bank,
+      category,
+      send,
+      date,
+      userId: session.user.id,
+    });
+  } 
+  if (validData.length === 0) {
+    return { status: 400, message: "No valid transactions to sync" };
+  } 
+  const transaction = await prisma.transaction.createMany({
+    data: validData,
+  });
+
+ 
+  if (!transaction) {
+    return { status: 500, message: "Failed to sync transactions" };
+  }
+
+  return { status: 200 , message: "Transactions synced successfully" };
 }

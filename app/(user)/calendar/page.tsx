@@ -15,22 +15,6 @@ const CalendarPage = () => {
   const endDate = new Date(selectedYear, selectedMonth + 1, 0, 23, 59, 59, 999);
   const { data,refetch } = useGetAllPaymemts(startDate, endDate);
 
-  // useEffect(()=>{
-  //   const res = ()=>{
-  //     console.log("changing");
-  //     // refetch();
-  //     localStorage.removeItem('paymentsData');
-  //     return ;
-  //   }
-  //   res();
-  // },[startDate, endDate])
-
-
-//   useEffect(() => {
-//   refetch();
-// }, [startDate, endDate]);
-
-
   useEffect(() => {
     if (data) {
       const revData = data?.reduce((acc: { name: string, amount: number, date: Date | string }[], curr: TransactionTypeProps) => {

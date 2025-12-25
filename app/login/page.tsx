@@ -84,7 +84,7 @@ const SignInPage = () => {
             {/* Header */}
             <div className="text-center mt-5 mb-8">
               <div className="relative inline-block mb-6">
-                <div className="w-32 h-32 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full p-4 shadow-2xl transform hover:scale-90 hover:-translate-y-2 transition-all duration-300">
+                <div className="w-32 h-32 b 0 rounded-full p-4 shadow-2xl transform hover:scale-90 hover:-translate-y-2 transition-all duration-300">
                   <div className="w-full h-full rounded-full flex items-center justify-center">
 
                     <Image src='/bank.png' alt='logo' width={140} height={140} className='hover:scale-125  transition-all duration-500  my-10 drop-shadow-[0_5px_13px_rgba(0,0,0,0.25)] drop-shadow-amber-100   inline-block ml-2' />
@@ -109,7 +109,7 @@ const SignInPage = () => {
             </div>
 
             {/* Sign In Card */}
-            <div className="bg-[#1E1E2E]/40 backdrop-blur-lg border border-[#313244]/50 rounded-2xl p-8 shadow-2xl">
+            <div className="bg-[#1E1E2E]/70 backdrop-blur-lg border border-[#313244]/50 rounded-2xl p-8 shadow-2xl">
               <div className="text-center mb-8">
                 <h2 className="text-2xl font-bold text-white mb-2">Sign In</h2>
                 <p className="text-gray-400">Continue with your Google account</p>

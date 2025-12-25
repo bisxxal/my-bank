@@ -18,7 +18,6 @@ export default async function UserLayout({
         {children}
       </div>
       <BottomBar />
-      
     </main>
   );
 }

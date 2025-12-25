@@ -118,7 +118,7 @@ const TransactionPage = () => {
   const handleOpen = (id: string) => {
     setOpenItemId(id);
   };
-
+// borrow and lend total calculation
   useEffect(() => {
     const data = localStorage.getItem('lastBorrowType');
     if (!data) return;
@@ -145,18 +145,21 @@ const TransactionPage = () => {
   }, []);
 
   useEffect(() => {
- 
+
     if (isOnline) {
-      
+
       let existing = JSON.parse(localStorage.getItem('payment-to-be-sync') || "[]");
-      if (!Array.isArray(existing) || existing.length === 0  ) {
+      if (!Array.isArray(existing) || existing.length === 0) {
         return;
       }
+      
       CreateMutation.mutate(existing);
+       
     }
 
   }, [isOnline])
 
+  // offline data sync mutation
   const CreateMutation = useMutation({
     mutationFn: async (newEntry: string[]) => {
       return await OflineSyncTransaction(newEntry);
@@ -165,19 +168,21 @@ const TransactionPage = () => {
       if (data.status === 200) {
         localStorage.removeItem('payment-to-be-sync');
         toastSuccess('Transaction synced successfully');
-        refetch();
+        // refetch();
+        return  refetch();;
       }
     },
     onError: (error) => {
       toastError('Failed to create transaction');
     },
+
   });
 
   return (
     <div className='mt-[100px] relative w-full min-h-screen pb-20'>
 
       {CreateMutation.isPending && <div className=' center text-sm border border-[#ffffff1e] gap-2 w-fit text-[#ffffff58] mx-auto rounded-2xl px-3 py-1'>
-        <RefreshCw className='animate-spin' size={18}/> <p> Syncing your offline data...</p>
+        <RefreshCw className='animate-spin' size={18} /> <p> Syncing your offline data...</p>
       </div>}
 
       {showDeleteConfirmation !== null && <div className=' bg-[#00000023] z-[10] top-10 fixed center backdrop-blur-[10px] w-full h-full'>

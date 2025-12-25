@@ -8,6 +8,7 @@ import { useState } from "react";
 const SyncMailPage = () => {
     const [limit, setLimit] = useState<number>(1);
     const queryClient = useQueryClient();
+
     const createSync = useMutation({
         mutationFn: async (limit: number) => {
             return await syncBankEmails(limit);

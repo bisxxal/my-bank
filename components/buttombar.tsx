@@ -2,19 +2,63 @@
 import { ArrowLeftRight, Calendar, ChartLine, User, Wallet } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const BottomBar = () => {
-
     const path = usePathname()
+    const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 })
+    const itemRefs = useRef<(HTMLAnchorElement | null)[]>([])
+
+    const navItems = [
+        { href: '/transaction', icon: ArrowLeftRight },
+        { href: '/track', icon: ChartLine },
+        { href: '/calendar', icon: Calendar },
+        { href: '/category', icon: Wallet },
+        { href: '/profile', icon: User },
+    ]
+ 
+    useEffect(() => {
+        const activeIndex = navItems.findIndex((item) => item.href === path)
+        const currentElement = itemRefs.current[activeIndex]
+
+        if (currentElement) {
+            setPillStyle({
+                left: currentElement.offsetLeft,
+                width: currentElement.offsetWidth,
+                opacity: 1,  
+            })
+        }
+    }, [path])
+
     return (
-        <div className=' fixed bottom-[20px] z-[100] w-full center h-[60px] '>
-            <div className='w-fit  backdrop-blur-[10px] p-2 rounded-2xl bg border border-[#d3d3d346] flex !justify-evenly items-center gap-5 h-full '>
-                <Link className={`${path === `/transaction` ? 'buttonbg' : " bg-[#66677575] " } hover:-translate-y-3 hover:scale-[1.3] max-md:hover:scale-[none] hover:transition-all duration-300 ease-in-out px-3 py-3 center rounded-xl  `} href={'/transaction'}> <ArrowLeftRight /> </Link>
-                <Link className={`${path === `/track` ? 'buttonbg' : "bg-[#66677575]" } hover:-translate-y-3 hover:scale-[1.3] max-md:hover:scale-[none] hover:transition-all duration-300 ease-in-out px-3 py-3 center rounded-xl  `} href={'/track'}>  <ChartLine /> </Link>
-                <Link className={`${path === `/calendar` ? 'buttonbg' : "bg-[#66677575]" } hover:-translate-y-3 hover:scale-[1.3] max-md:hover:scale-[none] hover:transition-all duration-300 ease-in-out px-3 py-3 center rounded-xl  `} href={'/calendar'}> <Calendar /> </Link>
-                <Link className={`${path === `/category` ? 'buttonbg' : "bg-[#66677575]" } hover:-translate-y-3 hover:scale-[1.3] max-md:hover:scale-[none] hover:transition-all duration-300 ease-in-out px-3 py-3 center rounded-xl  `} href={'/category'}> <Wallet /> </Link>
-                <Link className={`${path === `/profile` ? 'buttonbg' : "bg-[#66677575]" } hover:-translate-y-3 hover:scale-[1.3] max-md:hover:scale-[none] hover:transition-all duration-300 ease-in-out px-3 py-3 center rounded-xl  `} href={'/profile'}> <User /> </Link>
+        <div className='fixed bottom-0 z-[100] w-full flex justify-center h-[80px] pointer-events-none'>
+
+            <div className='pointer-events-auto backdrop-blur-[10px] relative flex items-center gap-0 p-2 border border-[#d3d3d346]  mb-6 ackdrop-blur-md rounded-full bg-black/20 '>
+                
+                <div
+                    className="absolute h-[calc(100%-10px)] top-1 rounded-full bg-[#6b11c49d] transition-all duration-500 ease-in-out -z-10"
+                    style={{
+                        left: `${pillStyle.left}px`,
+                        width: `${pillStyle.width}px`,
+                        opacity: pillStyle.opacity,
+                    }}
+                />
+
+                {navItems.map((item, index) => {
+                    const isActive = path === item.href
+                    const Icon = item.icon
+
+                    return (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            ref={(el) => { itemRefs.current[index] = el }}
+                            className={`
+                                relative px-6 py-2 rounded-full transition-colors duration-300 hover:-translate-y-1 hover:scale-110${isActive ? 'text-white' : 'text-[#d3d3d3b4] hover:text-white'}`}>
+                            <Icon size={24} />
+                        </Link>
+                    )
+                })}
             </div>
         </div>
     )

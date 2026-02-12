@@ -9,9 +9,7 @@ export async function syncBankEmails(limit: number) {
   const session = await getServerSession(authOptions);
   const accessToken = (session as any)?.accessToken;
   if (!accessToken) throw new Error("No access token");
-
   const emails = await getBankEmails(limit);
-
   if (!session) {
     return { status: 400, message: " user not authenticated." };
   }

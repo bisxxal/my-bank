@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react';
 import { User, Shield, Sparkles, Mail, Home, ArrowRight, LogOut } from 'lucide-react';
 import Image from 'next/image';
 
-
 const SignInPage = () => {
   const { data: session } = useSession();
   const router = useRouter();
@@ -20,7 +19,7 @@ const SignInPage = () => {
 
     if (session) {
     return (
-      <div className="min-h-screen bg-[#181825] flex items-center justify-center p-4">
+      <div className="min-h-screen bg-[#000000] flex items-center justify-center p-4">
         <div className="bg-[#1E1E2E]/80 backdrop-blur-lg border border-[#313244]/50 rounded-2xl p-8 shadow-2xl max-w-md w-full text-center">
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mb-4">
@@ -62,7 +61,7 @@ const SignInPage = () => {
     );
   }
   return (
-    <div className="min-h-screen bg-[#181825] relative overflow-hidden">
+    <div className="min-h-screen bg-[#000000] relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-cyan-900/20"></div>

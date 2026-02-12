@@ -25,7 +25,7 @@ const TransactionPage = () => {
 
   const { data, isLoading, refetch } = useGetAllPaymemts(startDate, endDate);
 
-  const groupedMessages = data?.reduce((acc: Record<string, typeof data>, msg: TransactionTypeProps) => {
+  const groupedMessages = data && data?.reduce((acc: Record<string, typeof data>, msg: TransactionTypeProps) => {
     const label = getLabelForDate(String(msg?.date ?? ''));
     if (!acc[label]) acc[label] = [];
     acc[label].push(msg);

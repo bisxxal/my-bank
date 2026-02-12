@@ -43,3 +43,6 @@ next-env.d.ts
 /lib/generated/prisma
 
 TODO.md
+
+/public/service-worker.js
+/public/workbox-*.js

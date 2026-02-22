@@ -23,7 +23,7 @@ const SignInPage = () => {
         <div className="bg-[#1E1E2E]/80 backdrop-blur-lg border border-[#313244]/50 rounded-2xl p-8 shadow-2xl max-w-md w-full text-center">
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full mb-4">
-              {/* <User size={40} className="text-white" /> */}
+             
               <Image src={session.user?.image!} alt='profile' width={120} height={120} className='rounded-full w-20 h-20' />
             </div>
             <h2 className="text-2xl font-bold text-white mb-2">Welcome Back!</h2>
@@ -89,9 +89,7 @@ const SignInPage = () => {
                     <Image src='/bank.png' alt='logo' width={140} height={140} className='hover:scale-125  transition-all duration-500  my-10 drop-shadow-[0_5px_13px_rgba(0,0,0,0.25)] drop-shadow-amber-100   inline-block ml-2' />
                   </div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full flex items-center justify-center animate-bounce">
-                  <Sparkles size={16} className="text-white" />
-                </div>
+               
               </div>
 
               <h1 className="text-4xl font-bold text-white mb-4">

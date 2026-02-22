@@ -31,7 +31,7 @@ export async function getTransactionsBySelected(startDate: Date, endDate: Date) 
       category: true,
 
     },
-    // take: 20,
+    
     orderBy: { date: "desc" },
   });
 

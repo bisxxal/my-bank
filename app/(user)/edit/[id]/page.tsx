@@ -64,14 +64,14 @@ const EditPage = () => {
   }, [data]);
 
   if (isLoading) return <div className=' min-h-screen '>
-    <Loading boxes={1} child='mt-10 max-md:mt-0 w-[70%] max-md:w-[95%] !rounded-3xl h-[80vh]' parent=' w-full h-screen' />
+    <Loading boxes={1} child='mt-16   w-[70%] max-md:w-[95%] !rounded-3xl h-[70vh]' parent=' !justify-start border w-full h-screen' />
   </div>;
 
 
   return (
     <div className=' w-full min-h-screen pb-20 flex flex-col  items-center'>
       <h1 className="text-2xl font-bold center my-4">Update Transaction</h1>
-      <form action={handelFormSubmit} className="space-y-4  w-[70%] border bordercolor max-md:w-[95%] mx-auto py-5 rounded-2xl flex px-4 flex-col">
+      <form action={handelFormSubmit} className="space-y-4  w-[70%] border bordercolor max-md:w-[95%] mx-auto py-5 rounded-3xl flex px-4 flex-col">
 
         <div className=''>
           <label className="block text-sm font-medium ">Amount</label>

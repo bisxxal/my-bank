@@ -10,7 +10,7 @@ import { toastError, toastSuccess } from '@/lib/toast';
 import { TransactionTypeProps } from '@/lib/types';
 import { useMutation } from '@tanstack/react-query';
 import { endOfMonth, startOfMonth } from 'date-fns';
-import { ArrowDownLeft, ArrowDownRight, RefreshCcw, RefreshCw, TrendingDown, TrendingUp } from 'lucide-react';
+import { ArrowDownLeft, ArrowDownRight, BanknoteArrowUp, Landmark, PiggyBank, RefreshCcw, RefreshCw, TrendingDown, TrendingUp } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
 
@@ -23,7 +23,7 @@ const TransactionPage = () => {
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<string | null>(null);
   const [borrow, setBorrow] = useState([])
 
-  const { data, isLoading, refetch } = useGetAllPaymemts(startDate, endDate);
+  const { data, isLoading, refetch,isRefetching } = useGetAllPaymemts(startDate, endDate);
 
   const groupedMessages = data && data?.reduce((acc: Record<string, typeof data>, msg: TransactionTypeProps) => {
     const label = getLabelForDate(String(msg?.date ?? ''));
@@ -207,7 +207,7 @@ const TransactionPage = () => {
           </div>
         </div>
       </div>}
-      <h1 className="text-center flex flex-col font-semibold text-lg mt-6 ">Your Total Transactions  {data?.length}
+      <h1 className="text-center flex flex-col font-semibold text-lg mt-6 "> Total Transactions  {data?.length}
       </h1>
       <div className="flex flex-col gap-4 px-14 max-md:px-2.5 pt-5">
 
@@ -222,7 +222,7 @@ const TransactionPage = () => {
             }
             <div>
               <button onClick={() => refetch()} className=' buttonbg p-2 rounded-3xl px-5 '>
-                <RefreshCcw />
+                <RefreshCcw className={`${isRefetching &&  " animate-spin " }`} />
               </button>
             </div>
           </div>
@@ -252,7 +252,7 @@ const TransactionPage = () => {
 
         {groupedMessages && Object.entries(groupedMessages).length !== 0 && !isLoading ? Object?.entries(groupedMessages).map(([label, group]) => (
           <div key={label}>
-            <div className="text-center border bordercolor bg-[#262538] w-fit mx-auto rounded-full px-2 text-sm basecolor2 font-semibold my-4">{label}</div>
+            <div className="text-center border bordercolor bg-[#262538] w-fit mx-auto rounded-full px-2 text-sm basecolor2 font-semibold mb-2">{label}</div>
             {group?.map((msg: TransactionTypeProps) => (
               <SwipeRevealActions
                 key={msg.id}
@@ -264,23 +264,29 @@ const TransactionPage = () => {
                 onOpen={handleOpen}
                 setRef={setItemRef}
               >
-                <div className="flex  card max-md:items-start justify-between items-center border bordercolor rounded-2xl p-4" key={msg.id}>
-                  <div>
-                    <p><strong>Amount:</strong> <span className='  text-xl font-bold'>₹{msg.amount.toFixed(2)}</span> </p>
-                    <p className={`${msg.type === 'credit' ? ' text-green-500 ' : ' text-red-500 '} capitalize `}><strong>Type:</strong> {msg.type}</p>
-                    <p><strong>Bank:</strong> {msg.bank}</p>
+                <div className="flex flex-col items-center h-full card  gap-10 max-md:gap-3   border bordercolor rounded-2xl p-4" key={msg.id}>
 
-                    {msg?.send && <p><strong> {msg.type === 'credit' ? ' Send By ' : ' Send to'}   : </strong> {msg.send}</p>}
-                    {msg?.spendsOn && <p><strong> {msg.type === 'credit' ? ' Recived on ' : ' Spends On '}   :</strong> {msg.spendsOn}</p>}
-                    {msg?.category && <p><strong>Category:</strong> {msg.category}</p>}
-                    <p><strong>Date:</strong>
+                  <div className=' gap-2 flex flex-col   '>
+                    <p> <span className= {`${msg.type === 'credit' ? ' text-green-500 ' : ' text-red-500 '} text-4xl font-bold `} >₹{msg.amount.toFixed(2)}</span> </p>
+                    {/* <p className={`${msg.type === 'credit' ? ' text-green-500 ' : ' text-red-500 '} capitalize `}><strong>Type:</strong> {msg.type}</p> */}
+                    
+                  </div>
+
+                  <div className='  h-full gap-1.5 flex   flex-col bordercolor pl-4'>
+
+                    <div className=' flex gap-5'>
+                     <p className='flex gap-2 items-center'><Landmark /> {msg.bank}</p>
+                    {msg?.category && <p className=' flex gap-2 items-center capitalize'><BanknoteArrowUp /> {msg.category}</p>}
+                    </div>
+                    {msg?.send && <p  className=' capitalize'><strong> {msg.type === 'credit' ? ' Send By ' : ' Spends On'}   : </strong> {msg.send}</p>}
+                    
+                     <p className=' text-sm'> 
                       {new Date(msg.date).toLocaleString('en-US', {
                         year: 'numeric',
-                        month: 'long',
+                        month: 'short',
                         day: 'numeric',
                         hour: 'numeric',
                         minute: '2-digit',
-                        second: '2-digit',
                         hour12: true
                       })}
                     </p>
@@ -291,7 +297,7 @@ const TransactionPage = () => {
           </div>
         )) : (
           isLoading ?
-            <Loading boxes={5} child="h-28 max-md:h-[200px] w-full !rounded-3xl " parent="w-full px-0 mt-13 " /> : <p className='mt-20 text-lg center '>No data found</p>
+            <Loading boxes={5} child="h-28  h-[160px] w-full !rounded-3xl " parent="w-full px-0 mt-13 " /> : <p className='mt-20 text-lg center '>No data found</p>
         )}
 
       </div>

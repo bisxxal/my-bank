@@ -48,10 +48,7 @@ const BankTrackerHero = ({status}) => {
             {/* Left Content */}
             <div className="space-y-8">
               <div className="space-y-6">
-                <div className="inline-flex animate-scale-up max-md:text-sm items-center space-x-2 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 rounded-full px-4 py-2 border border-purple-500/30">
-                  <Zap className="w-4 h-4 text-purple-400" />
-                  <span className="text-sm text-purple-300">AI-Powered Financial Tracking</span>
-                </div>
+                
 
                 <h1 className="text-4xl lg:text-6xl animate-scale-up delay-700 font-bold leading-tight">
                   Track Your{' '}
@@ -69,28 +66,28 @@ const BankTrackerHero = ({status}) => {
 
               {/* Features Grid */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="flex items-center space-x-3 p-4 max-md:p-2 animate-slide-up max-md:text-sm   bg-white/5 rounded-lg border border-white/10">
+                <div className="flex items-center space-x-3 p-4 max-md:p-2 animate-slide-up max-md:text-sm   bg-white/5 rounded-2xl border border-white/10">
                   <Mail className="w-6 h-6 text-cyan-400" />
                   <div>
                     <p className="font-medium">Email Tracking</p>
                     <p className="text-sm text-gray-400">Fetch by email</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 p-4 max-md:p-2 animate-slide-up max-md:text-sm   bg-white/5 rounded-lg border border-white/10">
+                <div className="flex items-center space-x-3 p-4 max-md:p-2 animate-slide-up max-md:text-sm   bg-white/5 rounded-2xl border border-white/10">
                   <PieChartIcon className="w-6 h-6 text-purple-400" />
                   <div>
                     <p className="font-medium">Smart Categories</p>
                     <p className="text-sm text-gray-400">Auto categorize</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 p-4 max-md:p-2 animate-slide-up max-md:text-sm   bg-white/5 rounded-lg border border-white/10">
+                <div className="flex items-center space-x-3 p-4 max-md:p-2 animate-slide-up max-md:text-sm   bg-white/5 rounded-2xl border border-white/10">
                   <CreditCard className="w-6 h-6 text-green-400" />
                   <div>
                     <p className="font-medium">Statements</p>
                     <p className="text-sm text-gray-400">Credit & Debit</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 p-4 max-md:p-2 animate-slide-up max-md:text-sm   bg-white/5 rounded-lg border border-white/10">
+                <div className="flex items-center space-x-3 p-4 max-md:p-2 animate-slide-up max-md:text-sm   bg-white/5 rounded-2xl border border-white/10">
                   <Target className="w-6 h-6 text-yellow-400" />
                   <div>
                     <p className="font-medium">Real-time</p>
@@ -105,9 +102,7 @@ const BankTrackerHero = ({status}) => {
                   <Plus className="w-5 h-5 inline mr-2" />
                   Start Tracking Now
                 </Link>
-                <button className="border border-white/20 px-8 py-4 max-md:py-3 rounded-full text-white font-medium hover:bg-white/5 transition-all duration-300">
-                  View Demo
-                </button>
+                 
               </div>
             </div>
 

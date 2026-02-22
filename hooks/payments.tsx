@@ -36,7 +36,7 @@ export const useGetAllPaymemts = (startDate: Date, endDate: Date) => {
     }
   }, []); 
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, isRefetching , refetch } = useQuery({
     queryKey: ['trackerData', rangeKey],
     queryFn: async () => {
       const fetched = await getTransactionsBySelected(startDate, endDate);
@@ -77,5 +77,6 @@ export const useGetAllPaymemts = (startDate: Date, endDate: Date) => {
     data: localData,
     isLoading: isCheckingLocal || (localData === null && isLoading),
     refetch,
+    isRefetching
   };
 };

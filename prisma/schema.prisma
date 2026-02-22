@@ -46,7 +46,7 @@ model Transaction {
   date      DateTime? @default(now())
   amount    Int
   send    String?
-  spendsOn String?
+  
   category  String?
 
   userId    String  

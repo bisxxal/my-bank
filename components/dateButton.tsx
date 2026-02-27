@@ -8,7 +8,7 @@ const DateButton = ({ startDate, endDate, setEndDate, setStartDate }:
     return (
         <div className="flex center !z-[2] flex-warp gap-4 max-md:gap-2 px-4 max-md:px-0 ">
             <div className=' max-md:w-[120px]  '>
-                <label className="text-white text-sm mr-2">Start Date</label>
+                <p className="text-white text-sm mr-2 text-center">To  </p>
                 <DatePicker
                     selected={startDate}
                     onChange={(date: Date | null) => {
@@ -24,7 +24,7 @@ const DateButton = ({ startDate, endDate, setEndDate, setStartDate }:
                 />
             </div>
             <div className=' max-md:w-[120px] '>
-                <label className="text-white text-sm mr-2">End Date</label>
+                <p className="text-white text-center text-sm mr-2">From  </p>
                 <DatePicker
                     selected={endDate}
                     onChange={(date: Date | null) => {

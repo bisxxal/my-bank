@@ -1,5 +1,5 @@
 'use client'
-import { ArrowLeftRight, Calendar, ChartLine, User, Wallet } from 'lucide-react'
+import { ArrowLeftRight, Calendar, ChartLine, User, ChartPie } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
@@ -13,7 +13,7 @@ const BottomBar = () => {
         { href: '/transaction', icon: ArrowLeftRight },
         { href: '/track', icon: ChartLine },
         { href: '/calendar', icon: Calendar },
-        { href: '/category', icon: Wallet },
+        { href: '/category', icon: ChartPie },
         { href: '/profile', icon: User },
     ]
  

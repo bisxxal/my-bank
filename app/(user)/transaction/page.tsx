@@ -207,7 +207,12 @@ const TransactionPage = () => {
           </div>
         </div>
       </div>}
-      <h1 className="text-center flex flex-col font-semibold text-lg mt-6 "> Total Transactions  {data?.length}
+     
+      <h1 className="text-center flex items-end justify-center text-lg mt-6 "> 
+         
+         <p className='font-bold text-4xl   ' >
+           {data?.length}
+        </p> <p className=' text-xs'>Transactions</p> 
       </h1>
       <div className="flex flex-col gap-4 px-14 max-md:px-2.5 pt-5">
 
@@ -221,8 +226,8 @@ const TransactionPage = () => {
               </button>
             }
             <div>
-              <button onClick={() => refetch()} className=' buttonbg p-2 rounded-3xl px-5 '>
-                <RefreshCcw className={`${isRefetching &&  " animate-spin " }`} />
+              <button onClick={() =>{ localStorage.removeItem('paymentsData'); refetch()}} className=' buttonbg p-2 rounded-3xl px-5 '>
+                <RefreshCcw className={`${ isRefetching &&  " animate-spin " }`} />
               </button>
             </div>
           </div>

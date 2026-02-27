@@ -24,19 +24,18 @@ const CateGoryPage = () => {
     useEffect(() => {
         if (data) {
             const revData = data?.reduce((acc: { name: string, amount: number, category: string, date: Date | string }[], curr: TransactionTypeProps) => {
-                // Ensure you're only processing "debit" types
+                
                 const type = curr?.type.toLowerCase() === 'debit' ? 'debit' : null;
                 const date = moment(curr.date).format("YYYY-MM-DD");
-                const category = curr.category ?? 'Others'; // Handle null or undefined category
-
-                // Only process debit transactions
+                const category = curr.category ?? 'Others';  
+ 
                 if (type === 'debit') {
                     const existing = acc.find(
                         (item) => item.name === 'debit' && item.category === category
                     );
 
                     if (existing) {
-                        existing.amount += curr.amount; // Accumulate amount for the same category
+                        existing.amount += curr.amount; //  amount for the same category
                     } else {
                         acc.push({ name: type, date, amount: curr.amount, category });
                     }

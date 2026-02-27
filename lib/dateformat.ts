@@ -20,8 +20,8 @@ export const getLabelForDate = (dateString: string): string => {
   const daysDiff = Math.floor((today.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
 
   if (daysDiff < 7) {
-    return date.toLocaleDateString(undefined, { weekday: 'long' }); // e.g. "Monday"
+    return date.toLocaleDateString(undefined, { weekday: 'long' });  
   }
 
-  return date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }); // e.g. "June 27, 2025"
+  return date.toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });  
 };

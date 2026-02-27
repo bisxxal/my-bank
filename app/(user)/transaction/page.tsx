@@ -11,10 +11,17 @@ import { TransactionTypeProps } from '@/lib/types';
 import { useMutation } from '@tanstack/react-query';
 import { endOfMonth, startOfMonth } from 'date-fns';
 import { ArrowDownLeft, ArrowDownRight, BanknoteArrowUp, Landmark, PiggyBank, RefreshCcw, RefreshCw, TrendingDown, TrendingUp } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { redirect, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
 
 const TransactionPage = () => {
+ const { data:session, status } = useSession();
+ 
+  if( !session?.user || status !== 'authenticated'){
+    redirect('/')
+  }
+
   const { isOnline } = useNetworkStatus()
   const router = useRouter();
   const today = new Date();
@@ -25,12 +32,16 @@ const TransactionPage = () => {
 
   const { data, isLoading, refetch,isRefetching } = useGetAllPaymemts(startDate, endDate);
 
-  const groupedMessages = data && data?.reduce((acc: Record<string, typeof data>, msg: TransactionTypeProps) => {
+  console.log("DATA:", data);
+  console.log("TYPE:", typeof data);
+  console.log("IS ARRAY:", Array.isArray(data));
+
+  const groupedMessages = data   && data?.reduce((acc: Record<string, typeof data>, msg: TransactionTypeProps) => {
     const label = getLabelForDate(String(msg?.date ?? ''));
     if (!acc[label]) acc[label] = [];
     acc[label].push(msg);
     return acc;
-  }, {});
+  }, {}); 
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
@@ -117,8 +128,7 @@ const TransactionPage = () => {
 
   const handleOpen = (id: string) => {
     setOpenItemId(id);
-  };
-// borrow and lend total calculation
+  }; 
   useEffect(() => {
     const data = localStorage.getItem('lastBorrowType');
     if (!data) return;
@@ -158,8 +168,7 @@ const TransactionPage = () => {
     }
 
   }, [isOnline])
-
-  // offline data sync mutation
+ 
   const CreateMutation = useMutation({
     mutationFn: async (newEntry: string[]) => {
       return await OflineSyncTransaction(newEntry);
@@ -168,7 +177,6 @@ const TransactionPage = () => {
       if (data.status === 200) {
         localStorage.removeItem('payment-to-be-sync');
         toastSuccess('Transaction synced successfully');
-        // refetch();
         return  refetch();;
       }
     },

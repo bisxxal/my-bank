@@ -27,7 +27,7 @@ const session = await getServerSession(authOptions);
   const res = await gmail.users.messages.list({
     userId: "me",
     q: bankEmails,
-    maxResults: limit, // 👈 decrease this to avoid Gmail quota errors
+    maxResults: limit, 
   });
   const messages = res.data.messages || [];
 

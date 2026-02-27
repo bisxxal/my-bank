@@ -1,5 +1,4 @@
 'use client'
-import { getTransactionsBySelected } from '@/actions';
 import { useQuery } from '@tanstack/react-query';
 import {   TrendingDown, TrendingUp  } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
@@ -19,16 +18,8 @@ const TrackerPage = () => {
   const [typedata, setTypeData] = useState<any[]>([]);
   const [bankData, setBankData] = useState<any[]>([]);
   const [barData, setBarData] = useState<any[]>([]);
-
-  // const { data, isLoading } = useQuery({
-  //   queryKey: ['trackerData', startDate, endDate],
-  //   queryFn: async () => {
-  //     const res = await getTransactionsBySelected(startDate, endDate)
-  //     return res
-  //   }
-  // })
-
-    const { data, isLoading ,refetch } = useGetAllPaymemts(startDate, endDate);
+  
+    const { data, isLoading  } = useGetAllPaymemts(startDate, endDate);
 
   useEffect(() => {
     if (data) {
@@ -268,5 +259,4 @@ const TrackerPage = () => {
 }
 
 export default TrackerPage
-
-//23
+ 

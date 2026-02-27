@@ -20,8 +20,7 @@ export const useGetAllPaymemts = (startDate: Date, endDate: Date) => {
           } else {
             setLocalData(null);
           }
-        } else {
-          // old shape or invalid — clear it to avoid confusion
+        } else { 
           setLocalData(null);
           setStoredRangeKey(null);
         }
@@ -40,16 +39,16 @@ export const useGetAllPaymemts = (startDate: Date, endDate: Date) => {
     queryKey: ['trackerData', rangeKey],
     queryFn: async () => {
       const fetched = await getTransactionsBySelected(startDate, endDate);
+      if (fetched?.status !== 200) {
+        return [];
+      }
       try {
-        localStorage.setItem(
-          'paymentsData',
-          JSON.stringify({ rangeKey, data: fetched })
-        );
+        localStorage.setItem('paymentsData',JSON.stringify({ rangeKey, data: fetched?.data  }));
         setStoredRangeKey(rangeKey);
       } catch (err) {
       }
-      setLocalData(fetched);
-      return fetched;
+      setLocalData(fetched?.data);
+      return fetched?.data || [];
     },
     enabled: !isCheckingLocal && localData === null,
   });

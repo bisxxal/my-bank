@@ -117,7 +117,7 @@ const CreateTransaction = () => {
 
         <div>
           <label className="block text-sm font-medium ">
-            {type === 'credit' ? 'Who sends you ' : 'Send On '}  </label>
+            {type === 'credit' ? 'Who sends you ' : 'Spends On '}  </label>
           <input
             type="text"
             name='send'

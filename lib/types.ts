@@ -5,6 +5,6 @@ export interface TransactionTypeProps{
       amount: number,
       date: Date,
       send: string,
-      spendsOn: string,
+      
       category: string,
 }

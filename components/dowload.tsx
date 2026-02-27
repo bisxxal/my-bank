@@ -12,10 +12,7 @@ function Download({ text  }: Props) {
   const downloadReceipt = () => {
     const element = document.getElementById('receipt');
     if (!element) return;
-
-    // element.style.color = '#626262';
  
-    
     html2canvas(element, {
       scale: 2,
       width: element.scrollWidth,
@@ -29,21 +26,18 @@ function Download({ text  }: Props) {
 
       const canvasWidth = canvas.width;
       const canvasHeight = canvas.height;
-
-      // Calculate scale factor to fit within page without stretching
+ 
       const scale = Math.min(pageWidth / canvasWidth, pageHeight / canvasHeight);
 
       const imgWidth = canvasWidth * scale;
       const imgHeight = canvasHeight * scale;
-
-      // Center image
+ 
       const x = (pageWidth - imgWidth) / 2;
       const y = (pageHeight - imgHeight) / 2;
 
       doc.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
 
-      doc.save(`${text}.pdf`);
-      // element.style.color = '#E2E2F4'; 
+      doc.save(`${text}.pdf`); 
     });
   };
 

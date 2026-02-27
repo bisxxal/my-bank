@@ -22,8 +22,7 @@ export default function LoadingPage() {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval)
-          // Navigate to your main dashboard after loading
-           
+       
           return 100
         }
         return prev + 2

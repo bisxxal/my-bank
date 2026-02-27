@@ -4,9 +4,10 @@ import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
  
 export async function getTransactionsBySelected(startDate: Date, endDate: Date) {
-
-  // console.log("request comming")
-  const session = await getServerSession(authOptions);
+ 
+  try {
+    const session = await getServerSession(authOptions);
+ 
   if (!session) {
     return { status: 400, message: "User not authenticated" };
   }
@@ -26,17 +27,21 @@ export async function getTransactionsBySelected(startDate: Date, endDate: Date) 
       bank: true,
       amount: true,
       date: true,
-      send: true,
-      spendsOn: true,
+      send: true, 
       category: true,
-
     },
     
     orderBy: { date: "desc" },
   });
-
-  // console.log("total data 🤖" , transactions.length)
-  return transactions;
+ 
+   if(transactions){
+    return { status: 200, data: transactions };
+   }
+   return { status: 404, message: "No transactions found" };
+  } catch (error) {
+      return { status: 500, message: "Failed to fetch transactions" };
+  }
+   
 }
 
 export async function deleteTransaction(id: string) {
@@ -44,21 +49,27 @@ export async function deleteTransaction(id: string) {
   if (!session) {
     return { status: 400, message: "User not authenticated" };
   }
-
-  const deletedTransaction = await prisma.transaction.delete({
+  try {
+    const deletedTransaction = await prisma.transaction.delete({
     where: {
       id: id,
     },
   });
 
   if (!deletedTransaction) {
-    return { status: 500, message: "Failed to delete transaction" };
+    return { status: 404, message: "Failed delete transaction" };
   }
   return { status: 200, message: "Transaction deleted successfully" };
+} catch (error) {
+  
+  return { status: 500, message: "Failed to delete transaction" };
+  }
 }
 
 export async function createTransaction(formData: FormData) {
-  const session = await getServerSession(authOptions);
+  try {
+    
+     const session = await getServerSession(authOptions);
   if (!session) {
     return { status: 400, message: "User not authenticated" };
   }
@@ -85,9 +96,13 @@ export async function createTransaction(formData: FormData) {
     },
   });
   if (!transaction) {
-    return { status: 500, message: "Failed to create transaction" };
+    return { status: 404, message: "Failed to create transaction" };
   }
+
   return { status: 200 };
+  } catch (error) {
+    return { status: 500, message: "server issue transaction" };
+  }
 }
 
 export async function getTransactionById(id: string) {
@@ -105,8 +120,7 @@ export async function getTransactionById(id: string) {
       bank: true,
       amount: true,
       date: true,
-      send: true,
-      spendsOn: true,
+      send: true, 
       category: true,
     },
   });
@@ -114,41 +128,43 @@ export async function getTransactionById(id: string) {
 }
 
 export async function updateTransaction(formData: FormData, id: string) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return { status: 400 };
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return { status: 400 };
+    }
+    const amount = parseInt(formData.get('amount') as string);
+    const type = formData.get('type') as string;
+    const bank = formData.get('bank') as string;
+    const category = formData.get('category') as string;
+    const send = formData.get('send') as string;
+    const date = new Date(formData.get('date2') as string);
+  
+    if (!amount || !type || !bank || !date) {
+      return { status: 400 };
+    }
+  
+    const transaction = await prisma.transaction.update({
+      where: {
+        id: id,
+      },
+      data: {
+        type,
+        bank,
+        amount,
+        date,
+        userId: session.user.id,
+        category, 
+        send,
+      },
+    });
+    if (!transaction) {
+      return { status: 404, message: "Failed to create transaction" };
+    }
+    return { status: 200 };
+  } catch (error) {
+    return { status: 500, message: "Internal server down" };
   }
-  const amount = parseInt(formData.get('amount') as string);
-  const type = formData.get('type') as string;
-  const bank = formData.get('bank') as string;
-  const category = formData.get('category') as string;
-  const spendsOn = formData.get('spendsOn') as string;
-  const send = formData.get('send') as string;
-  const date = new Date(formData.get('date2') as string);
-
-  if (!amount || !type || !bank || !date) {
-    return { status: 400 };
-  }
-
-  const transaction = await prisma.transaction.update({
-    where: {
-      id: id,
-    },
-    data: {
-      type,
-      bank,
-      amount,
-      date,
-      userId: session.user.id,
-      category,
-      spendsOn,
-      send,
-    },
-  });
-  if (!transaction) {
-    return { status: 500, message: "Failed to create transaction" };
-  }
-  return { status: 200 };
 }
 
 export async function getBanks() {
@@ -189,7 +205,7 @@ export async function AddBanks(formData: FormData) {
   if (!name || !email) {
     return { status: 400, message: "Bank name and at least one email are required" };
   }
-  //   if bank already exists
+  
   const existingBank = await prisma.bank.findFirst({
     where: {
       name,
@@ -273,8 +289,7 @@ export async function getTransactionsBySelectedMonth(month: number, year: number
       bank: true,
       amount: true,
       date: true,
-      send: true,
-      spendsOn: true,
+      send: true, 
       category: true,
     },
     orderBy: { date: "desc" },

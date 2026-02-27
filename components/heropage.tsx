@@ -6,8 +6,7 @@ import Link from 'next/link';
 import { calendarData, currentMonth, daysOfWeek, expenseData, generateCalendarDays, monthlyData, trendData } from "@/lib/dummy";
 import Image from 'next/image';
 
-const BankTrackerHero = ({status}) => {
-  // const { status } = useSession()
+const BankTrackerHero = ({status}) => { 
   const [animationStep, setAnimationStep] = useState(0);
   useEffect(() => {
     const timer = setInterval(() => {

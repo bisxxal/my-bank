@@ -59,12 +59,12 @@ const EditPage = () => {
     }
 
      if (data?.date) {
-    setSelectedDate(new Date(data.date)); // Ensure it's a Date object
+    setSelectedDate(new Date(data.date));  
   }
   }, [data]);
 
   if (isLoading) return <div className=' min-h-screen '>
-    <Loading boxes={1} child='mt-16   w-[70%] max-md:w-[95%] !rounded-3xl h-[70vh]' parent=' !justify-start border w-full h-screen' />
+    <Loading boxes={1} child='mt-16   w-[70%] max-md:w-[95%] !rounded-3xl h-[70vh]' parent=' !justify-start   w-full h-screen' />
   </div>;
 
 
@@ -127,25 +127,15 @@ const EditPage = () => {
           </select>
         </div>}
 
-        {types === 'debit' && <div>
-          <label className="block text-sm font-medium ">Spends on</label>
+         <div>
+          <label className="block text-sm font-medium ">
+            {types === 'credit' ? 'Who sends you ' : 'Spends On '}  </label>
           <input
             type="text"
             name='send'
             defaultValue={data?.send || ''}
             className="mt-1 block w-full border bordercolor card p-2 rounded-md shadow-sm  "
-            placeholder="Enter reason for spending "
-          />
-        </div>}
-
-        <div>
-          <label className="block text-sm font-medium "> {types === 'credit' ? 'Who sends you ' : 'Send to '} </label>
-          <input
-            type="text"
-            defaultValue={data?.spendsOn || ''}
-            name='spendsOn'
-            className="mt-1 block w-full border bordercolor card p-2 rounded-md shadow-sm  "
-            placeholder={types === 'credit' ? 'Sender name' : 'xyz private lim'}
+            placeholder={types === 'credit' ? 'Sender name' : 'Enter reason for spending'}
           />
         </div>
  
@@ -156,7 +146,7 @@ const EditPage = () => {
             required
             name='date'
             selected={selectedDate}
-            // selected={data?.date ? data?.date : selectedDate}
+           
             onChange={(date: Date | null) => {
               setSelectedDate(date);
             }}

@@ -29,63 +29,29 @@ const SwipeRevealActions: React.FC<Props> = ({
 
   const handlers = useSwipeable({
   onSwiping: ({ deltaX }) => {
-    if (deltaX < 0) {
-      // Swiping left (delete) is always allowed
+    if (deltaX < 0) { 
       setTranslateX(Math.max(deltaX, -maxSwipe));
-    } else if (editable) {
-      // Only allow swiping right (edit) if editable is true
+    } else if (editable) { 
       setTranslateX(Math.min(deltaX, maxSwipe));
-    } else {
-      // Prevent swiping right when not editable
+    } else { 
       setTranslateX(0);
     }
   },
   onSwiped: ({ deltaX }) => {
-    if (deltaX <= -50) {
-      // Confirm left swipe
+    if (deltaX <= -50) { 
       onOpen(id);
       setTranslateX(-maxSwipe);
-    } else if (deltaX >= 50 && editable) {
-      // Confirm right swipe only if editable
+    } else if (deltaX >= 50 && editable) { 
       onOpen(id);
       setTranslateX(maxSwipe);
-    } else {
-      // Reset position
+    } else { 
       setTranslateX(0);
     }
   },
   trackMouse: true,
   trackTouch: true,
 });
-
-  // const handlers = useSwipeable({
-  //   onSwiping: ({ deltaX }) => {
-      
-  //     // if (deltaX < 0) setTranslateX(Math.max(deltaX, -maxSwipe));
-  //     // else setTranslateX(Math.min(deltaX, maxSwipe));
-  //       if (deltaX < 0) {
-  //     // Allow swipe left (delete)
-  //     setTranslateX(Math.max(deltaX, -maxSwipe));
-  //   } else if (editable) {
-  //     // Allow swipe right (edit) only if editable
-  //     setTranslateX(Math.min(deltaX, maxSwipe));
-  //   }
-  //   },
-  //   onSwiped: ({ deltaX }) => {
-  //     if (deltaX <= -50) {
-  //       onOpen(id);
-  //       setTranslateX(-maxSwipe);
-  //     } else if (deltaX >= 50) {
-  //       onOpen(id);
-  //       setTranslateX(maxSwipe);
-  //     } else {
-  //       setTranslateX(0);
-  //     }
-  //   },
-  //   trackMouse: true,
-  //   trackTouch: true,
-  // });
-
+ 
   useEffect(() => {
     if (!isOpen) setTranslateX(0);
   }, [isOpen]);

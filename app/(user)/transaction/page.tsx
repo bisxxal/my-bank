@@ -1,6 +1,7 @@
 'use client';
 import { deleteTransaction, OflineSyncTransaction } from '@/actions';
 import DateButton from '@/components/dateButton';
+import { AnimateText } from '@/components/ui/AnimateText';
 import Loading from '@/components/ui/loading';
 import SwipeRevealActions from '@/components/ui/swipeToDelete';
 import useNetworkStatus from '@/hooks/oflinehook';
@@ -193,6 +194,8 @@ const TransactionPage = () => {
         <RefreshCw className='animate-spin' size={18} /> <p> Syncing your offline data...</p>
       </div>}
 
+       <AnimateText duration={200}>{100}</AnimateText>
+
       {showDeleteConfirmation !== null && <div className=' bg-[#00000023] z-[10] top-10 fixed center backdrop-blur-[10px] w-full h-full'>
         <div className=' bg-[#26253897] w-fit mx-auto mt-20 p-6 rounded-3xl shadow-lg'>
           <h2 className=' text-base max-md:text-[13px] '> Are you want to delete the Transaction ?</h2>
@@ -218,9 +221,11 @@ const TransactionPage = () => {
      
       <h1 className="text-center flex items-end justify-center text-lg mt-6 "> 
          
+         {data?.length &&  <AnimateText className='text-4xl' >{data?.length}</AnimateText>}
          <p className='font-bold text-4xl   ' >
-           {data?.length}
-        </p> <p className=' text-xs'>Transactions</p> 
+           {/* {data?.length} */}
+        </p> 
+        <p className=' text-xs'>Transactions</p> 
       </h1>
       <div className="flex flex-col gap-4 px-14 max-md:px-2.5 pt-5">
 
@@ -280,9 +285,10 @@ const TransactionPage = () => {
                 <div className="flex flex-col items-center h-full card  gap-10 max-md:gap-3   border bordercolor rounded-2xl p-4" key={msg.id}>
 
                   <div className=' gap-2 flex flex-col   '>
-                    <p> <span className= {`${msg.type === 'credit' ? ' text-green-500 ' : ' text-red-500 '} text-4xl font-bold `} >₹{msg.amount.toFixed(2)}</span> </p>
-                    {/* <p className={`${msg.type === 'credit' ? ' text-green-500 ' : ' text-red-500 '} capitalize `}><strong>Type:</strong> {msg.type}</p> */}
-                    
+                    <p> <span className= {`${msg.type === 'credit' ? ' text-green-500 ' : ' text-red-500 '} text-4xl font-bold `} >₹{msg.amount.toFixed(2)} 
+                        {   <AnimateText >{msg.amount.toFixed(2)}</AnimateText>}
+                      </span> </p>
+                  
                   </div>
 
                   <div className='  h-full gap-1.5 flex   flex-col bordercolor pl-4'>

@@ -13,7 +13,7 @@ const Home =   () => {
         text="My Bank"
         disabled={false}
         speed={1.8}
-        className='font-extrabold  text-5xl'
+        className='font-extrabold followtext uppercase text-5xl '
         />
     </div>
   )

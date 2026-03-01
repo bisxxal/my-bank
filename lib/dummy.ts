@@ -13,7 +13,13 @@ export const expenseData = [
     { month: 'Mar', income: 4800, expense: 3200 },
     { month: 'Apr', income: 3500, expense: 5600 },
     { month: 'May', income: 5300, expense: 2900 },
-    { month: 'Jun', income: 5800, expense: 1100 }
+    { month: 'Jun', income: 5800, expense: 1100 },
+    { month: 'Jul', income: 5800, expense: 1100 },
+    { month: 'Aug', income: 5800, expense: 1100 },
+    { month: 'Sep', income: 5800, expense: 4100 },
+    { month: 'Oct', income: 5800, expense: 5100 },
+    { month: 'Nov', income: 5800, expense: 3100 },
+    { month: 'Dec', income: 5800, expense: 8100 }
   ];
 
   export const trendData = [

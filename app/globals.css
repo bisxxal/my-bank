@@ -1,5 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap');
 @import "tailwindcss";
- 
 body { 
   /* background-color: #181825; */
   background-color: #13131e;
@@ -265,3 +265,13 @@ background: linear-gradient(180deg, #57c78500 0%, #0b0b12 100%);
 }
 
  
+.clipback {
+clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+
+}
+.followtext{
+   font-family: 'Syne' !important;
+   letter-spacing: -0.04em; 
+   font-weight: bolder !important;
+   line-height: 0.92 !important;  
+}

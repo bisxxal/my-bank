@@ -1,11 +1,9 @@
-export const expenseData = [
-    { name: 'Food', value: 2400, color: '#8b5cf6' },
-    { name: 'Transport', value: 1200, color: '#06b6d4' },
-    { name: 'Entertainment', value: 800, color: '#10b981' },
-    { name: 'Bills', value: 1500, color: '#f59e0b' },
-    { name: 'Shopping', value: 1000, color: '#ef4444' },
-    { name: 'Others', value: 600, color: '#6b7280' }
-  ];
+export const   expenseData = [
+  { name: "Food", value: 35, color: "#a78bfa" },
+  { name: "Transport", value: 20, color: "#34d399" },
+  { name: "Shopping", value: 25, color: "#f472b6" },
+  { name: "Bills", value: 20, color: "#60a5fa" },
+];
 
   export const monthlyData = [
     { month: 'Jan', income: 5000, expense: 2500 },

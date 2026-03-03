@@ -65,7 +65,7 @@ const CalendarPage = () => {
               {monthData
                 .filter((item) => moment(item.date).date() === d)
                 .map((item, index) => (
-                  <div key={index} className={`${item.name === 'credit' ? " text-green-500" : " text-red-500"} text-base items-center flex gap-1 max-md:gap-0.5 max-md:text-xs text-gray-190 `}>
+                  <div key={index} className={`${item.name === 'credit' ? " credittext " : " debittext"} text-base items-center flex gap-1 max-md:gap-0.5 max-md:text-xs text-gray-190 `}>
                     {item.name === 'debit' && <ArrowDownRight className=' block max-md:hidden' color='#fb2c36' size={19} />} {item.amount} {item.name === 'credit' && <ArrowDownLeft className=' block max-md:hidden' color='#00c951' size={19} />}
                   </div>
                 ))}
@@ -131,7 +131,7 @@ const CalendarPage = () => {
             <div className='flex flex-col items-center   creditbg center max-md:w-[170px] h-[60px] w-[150px] rounded-xl'>
               <h2 className='max-md:text-sm center gap-2'>Total Credited </h2>
 
-              <p className='    max-md:text-lg text-xl font-bold'> ₹{monthData
+              <p className=' credittext   max-md:text-lg text-xl font-bold'> ₹{monthData
                 .filter(item => item.name === 'credit')
                 .reduce((acc, curr) => acc + curr.amount, 0)
                 .toFixed(2)}</p>
@@ -140,7 +140,7 @@ const CalendarPage = () => {
               <h2 className='max-md:text-sm center gap-2'>
                 Total Debited
               </h2>
-              <span className=' max-md:text-lg text-xl font-bold'>₹{monthData
+              <span className='debittext max-md:text-lg text-xl font-bold'>₹{monthData
                 .filter(item => item.name === 'debit')
                 .reduce((acc, curr) => acc + curr.amount, 0)
                 .toFixed(2)}

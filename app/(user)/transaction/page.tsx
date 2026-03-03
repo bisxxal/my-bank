@@ -1,7 +1,6 @@
 'use client';
 import { deleteTransaction, OflineSyncTransaction } from '@/actions';
-import DateButton from '@/components/dateButton';
-import { AnimateText } from '@/components/ui/AnimateText';
+import DateButton from '@/components/dateButton'; 
 import Loading from '@/components/ui/loading';
 import SwipeRevealActions from '@/components/ui/swipeToDelete';
 import useNetworkStatus from '@/hooks/oflinehook';
@@ -187,14 +186,14 @@ const TransactionPage = () => {
 
   });
 
+
   return (
     <div className='mt-[100px] relative w-full min-h-screen pb-20'>
 
       {CreateMutation.isPending && <div className=' center text-sm border border-[#ffffff1e] gap-2 w-fit text-[#ffffff58] mx-auto rounded-2xl px-3 py-1'>
         <RefreshCw className='animate-spin' size={18} /> <p> Syncing your offline data...</p>
       </div>}
-
-       <AnimateText duration={200}>{100}</AnimateText>
+ 
 
       {showDeleteConfirmation !== null && <div className=' bg-[#00000023] z-[10] top-10 fixed center backdrop-blur-[10px] w-full h-full'>
         <div className=' bg-[#26253897] w-fit mx-auto mt-20 p-6 rounded-3xl shadow-lg'>
@@ -220,10 +219,8 @@ const TransactionPage = () => {
       </div>}
      
       <h1 className="text-center flex items-end justify-center text-lg mt-6 "> 
-         
-         {data?.length &&  <AnimateText className='text-4xl' >{data?.length}</AnimateText>}
          <p className='font-bold text-4xl   ' >
-           {/* {data?.length} */}
+           {data?.length}
         </p> 
         <p className=' text-xs'>Transactions</p> 
       </h1>
@@ -234,8 +231,8 @@ const TransactionPage = () => {
           <div>
             {
               borrow && <button className=' px-4 py-2 rounded-lg ' onClick={() => router.push('/borrow')}>
-                {borrow?.toBePaid > 0 && <span className='center text-red-600 font-semibold  text-sm'> <ArrowDownRight size={20} /> {borrow.toBePaid.toFixed(2)} </span>}
-                {borrow?.toBeReceived > 0 && <span className='center mt-1 text-green-600 font-semibold text-sm'><ArrowDownLeft size={20} /> {borrow.toBeReceived.toFixed(2)} </span>}
+                {borrow?.toBePaid > 0 && <span className='center debittext font-semibold  text-sm'> <ArrowDownRight size={20} /> {borrow.toBePaid.toFixed(2)} </span>}
+                {borrow?.toBeReceived > 0 && <span className='center mt-1 credittext font-semibold text-sm'><ArrowDownLeft size={20} /> {borrow.toBeReceived.toFixed(2)} </span>}
               </button>
             }
             <div>
@@ -253,12 +250,12 @@ const TransactionPage = () => {
               const percentage = i.creditAmount > 0 ? (balance / i.creditAmount) * 100 : 0;
               const isPositive = balance >= 0;
               return (
-                <div key={index} className=' bg-gradient-to-t from-[#43434300]   font-medium to-[#365cf523] rounded-3xl flex flex-col !items-start !justify-start max-md:min-w-[200px] min-w-[250px] p-4'>
+                <div key={index} className='  bankbg font-medium  rounded-3xl flex flex-col !items-start !justify-start max-md:min-w-[200px] min-w-[250px] p-4'>
                   <p className='w-full text-center   text-xl text-white font-bold'>{i.bank} </p>
-                  {i.credit && <p className='w-full text-green-500'>Credit: ₹{i.creditAmount.toFixed(2)}</p>}
-                  {i.debit && <p className='w-full text-red-500'>Debit: ₹{i.debitAmount.toFixed(2)}</p>}
+                  {i.credit && <p className='w-full credittext'>Credit: ₹{i.creditAmount.toFixed(2)}</p>}
+                  {i.debit && <p className='w-full debittext'>Debit: ₹{i.debitAmount.toFixed(2)}</p>}
                   <p className='w-full text-gray-100 flex items-center gap-2'>Total: {balance.toFixed(2)}{' '}</p>
-                  {percentage ? <p className={`font-semibold ${isPositive ? "text-green-500" : " text-red-500"} center `}> {isPositive ? <TrendingUp size={20} /> : <TrendingDown size={20} />} {percentage.toFixed(2)}%</p> : ''}
+                  {percentage ? <p className={`font-semibold ${isPositive ? "credittext " : " debittext "} center `}> {isPositive ? <TrendingUp className=' text-green-400' size={20} /> : <TrendingDown className=' text-red-500' size={20} />} {percentage.toFixed(2)}%</p> : ''}
                 </div>
               );
             })}
@@ -285,9 +282,10 @@ const TransactionPage = () => {
                 <div className="flex flex-col items-center h-full card  gap-10 max-md:gap-3   border bordercolor rounded-2xl p-4" key={msg.id}>
 
                   <div className=' gap-2 flex flex-col   '>
-                    <p> <span className= {`${msg.type === 'credit' ? ' text-green-500 ' : ' text-red-500 '} text-4xl font-bold `} >₹{msg.amount.toFixed(2)} 
-                        {   <AnimateText >{msg.amount.toFixed(2)}</AnimateText>}
-                      </span> </p>
+                    <p>
+                    <span className= {`${msg.type === 'credit' ? ' credittext ' : ' debittext '} text-4xl font-bold `} >₹{msg.amount.toFixed(2)}      
+                    </span>
+                     </p>
                   
                   </div>
 

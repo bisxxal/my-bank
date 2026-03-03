@@ -3,15 +3,24 @@ import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { LogOut } from 'lucide-react'
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 
 const Profile = () => {
   const { data: session, status } = useSession()
 
+  const router = useRouter();
   const logout = ()=>{
     localStorage.clear();
-    signOut()
+    signOut();
+
+    router.push('/login');
   }
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [session, status])
   return (
     <div className=' w-full min-h-screen overflow-hidden'>
       <div className="card mt-[50px] mx-auto relative backdrop-blur-3xl border border-[#313244]/50 rounded-2xl p-8 max-md:p-4 shadow-2xl max-w-md w-[90%] text-center">

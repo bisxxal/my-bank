@@ -85,19 +85,24 @@ const TrackerPage = () => {
     <div className='w-full overflow-hidden min-h-screen pb-20 p-4'>
       <DateButton startDate={startDate} endDate={endDate} setStartDate={setStartDate} setEndDate={setEndDate} />
       <div>
+
         <div className='flex justify-evenly w-full flex-warp gap-3 items-center my-4'>
           <div className='flex flex-col items-center  creditbg   center  h-[150px] w-[300px] rounded-3xl'>
-            <h2 className='max-md:text-sm center gap-1'>Total Credited: 
-              <TrendingUp size={30} className="text-green-400" /> 
+            <h2 className='max-md:text-sm center gap-2'>Total Credited
+              <div className='bg-[#34d39930] px-2 py-2 rounded-2xl'>
+              <TrendingUp size={25} className="text-[#34d399]" /> 
+              </div>
               </h2>
-            <p className=' text-white max-md:text-2xl text-3xl font-bold'>₹{totalCredit.toFixed(2)}</p>
+            <p className=' credittext max-md:text-2xl text-3xl font-bold'>₹{totalCredit.toFixed(2)}</p>
           </div>
           <div className='flex flex-col items-center   debitbg   center   h-[150px] w-[300px] rounded-3xl'>
-            <h2 className='max-md:text-sm center gap-1'>
-              <TrendingDown size={30} className="text-red-400" />
-              Total Debited:
+            <h2 className='max-md:text-sm center gap-2 '>
+              Total Debited
+              <div className='bg-[#f8717130] px-2 py-2 rounded-2xl'>
+              <TrendingDown size={25} className="text-[#f87171] " />
+              </div>
             </h2>
-            <span className='text-white max-md:text-2xl text-3xl font-bold'>₹{totalDebit.toFixed(2)} </span>
+            <span className='debittext max-md:text-2xl text-3xl font-bold'>₹{totalDebit.toFixed(2)} </span>
           </div>
         </div>
 

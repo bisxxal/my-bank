@@ -45,7 +45,7 @@ function Download({ text  }: Props) {
     <div className='flex justify-end'>
       <button
         onClick={downloadReceipt}
-        className="mt-4 px-6 py-3 buttonbg max-md:text-sm max-md:px-3 max-md:py-1 text-white flex items-center gap-3 rounded-lg"
+        className="mt-4 px-6 py-3 buttonbg max-md:text-sm max-md:px-3 max-md:py-1 text-white flex items-center gap-3 rounded-full"
       >
         Download <FileText />
       </button>

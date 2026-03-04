@@ -3,12 +3,28 @@ import { AlignRight } from 'lucide-react';
 import {  useSession } from 'next-auth/react'
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
-
+import React, { useEffect, useRef, useState } from 'react'
+ 
 const Navbar = () => {
-  const { data: session, status } = useSession()
+  const { data: session, status } = useSession();
+  const ref = useRef<HTMLDivElement>(null);
+  const [toogle, setToogle] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setToogle(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
-    <div className='z-[100] w-full top-0  left-0 fixed backdrop-blur-xl h-[60px] flex items-center justify-center '>
+    <div ref={ref} className='z-[100] w-full top-0  left-0 fixed backdrop-blur-xl h-[60px] flex items-center justify-center '>
       <div className=' w-full max-md:px-2 px-4 flex items-center justify-between'>
         <Link href={session?.user ? '/transaction' : '/'} className='max-md:text-xl  text-2xl center font-bold'>
           <Image src='/bank.png' alt='logo' width={40} height={40} className='hover:scale-125 drop-shadow-[0_5px_10px_rgba(0,0,0,0.25)] drop-shadow-amber-100  transition-all inline-block ml-2' />
@@ -24,11 +40,11 @@ const Navbar = () => {
                 <Image src={session.user?.image!} alt='profile' width={30} height={30} className='rounded-full' />
               </Link>
               <div className='relative group '>
-                <label className='bg-[#ffffff2d] p-1.5 rounded-lg flex cursor-pointer' htmlFor='is'>
+                <label onClick={()=>setToogle(!toogle)} className='bg-[#ffffff2d] p-1.5 rounded-lg flex cursor-pointer' htmlFor='is'>
                   <AlignRight className='text-gray-100' size={20} />
                 </label>
-                <input type="checkbox" hidden id="is" />
-                <div className='group-has-checked:flex hidden appear absolute  py-3.5 w-  flex-col gap-2 border  text-white p-2 border-black/10 rounded-3xl bg-[#393b5ff0] !backdrop-blur-[15px] -left-[165px] '>
+                {/* <input type="checkbox" hidden id="is" /> */}
+              { toogle &&  <div className=' flex appear absolute  py-3.5 w-  flex-col gap-2 border  text-white p-2 border-black/10 rounded-3xl bg-[#212131b6] !backdrop-blur-2xl -left-[165px] '>
                   <Link className='text-sm hover:bg-indigo-500 bg-[#00000031] py-2 rounded-xl hover:text-[#e6e2eb] text-[#ddcaf5] px-6 center' href={`/track`}> Track </Link>
                   <Link className='text-sm hover:bg-indigo-500 bg-[#00000031] py-2 rounded-xl hover:text-[#e6e2eb] text-[#ddcaf5] center' href={`/bank`}> Add Bank</Link>
                   <Link className='text-sm hover:bg-indigo-500 bg-[#00000031] py-2 rounded-xl hover:text-[#e6e2eb] text-[#ddcaf5] px-6 center' href={`/transaction`}> Transaction </Link>
@@ -37,7 +53,7 @@ const Navbar = () => {
                   <Link className='text-sm hover:bg-indigo-500 bg-[#00000031] py-2 rounded-xl hover:text-[#e6e2eb] text-[#ddcaf5] whitespace-nowrap center text-center px-2 ' href={`/create`}> Create transaction </Link>
                   <Link className='text-sm hover:bg-indigo-500 bg-[#00000031] py-2 rounded-xl hover:text-[#e6e2eb] text-[#ddcaf5] whitespace-nowrap center text-center px-2 ' href={`/syncmail`}> Sync Trancatioons </Link>
                   <Link className='text-sm hover:bg-indigo-500 bg-[#00000031] py-2 rounded-xl hover:text-[#e6e2eb] text-[#ddcaf5] whitespace-nowrap center text-center px-2 ' href={`/borrow`}>Borrow </Link>
-                </div>
+                </div>}
               </div>
             </div>
           ) : (

@@ -33,7 +33,7 @@ const BottomBar = () => {
     return (
         <div className='fixed buttombar bottom-0 z-[100] w-full flex justify-center h-[80px] pointer-events-none'>
 
-            <div className='pointer-events-auto backdrop-blur-[10px] bg-[#ffffff08] relative flex items-center gap-0 p-2 border border-[#d3d3d346]  mb-6 ackdrop-blur-md rounded-full '>
+            <div className='pointer-events-auto backdrop-blur-[10px] bg-[#ffffff08] relative flex items-center gap-0 p-2 border border-[#d3d3d325]  mb-6 ackdrop-blur-md rounded-full '>
                 
                 <div
                     className="absolute h-[calc(100%-10px)] top-1 rounded-full bg-[#6b11c49d] transition-all duration-500 ease-in-out -z-10"

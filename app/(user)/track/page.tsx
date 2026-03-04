@@ -110,7 +110,7 @@ const TrackerPage = () => {
       </div>
 
       <div className='my-6  flex justify-evenly items-center flex-wrap gap-4'>
-        <div className='flex flex-col   max-md:w-full bg-[#262538] border py-3 px-2 bordercolor rounded-3xl items-center justify-center'>
+        <div className='flex flex-col   max-md:w-full card border py-3 px-2 bordercolor rounded-3xl items-center justify-center'>
           <h1>Credit vs Debit</h1>
           <PieChart width={400} height={300}>
             <Pie
@@ -145,7 +145,7 @@ const TrackerPage = () => {
           </PieChart>
         </div>
 
-        <div className='flex flex-col   max-md:w-full bg-[#262538] border px-2 py-3 bordercolor rounded-3xl items-center justify-center'>
+        <div className='flex flex-col   max-md:w-full card border px-2 py-3 bordercolor rounded-3xl items-center justify-center'>
           <p>Bank Transaction</p>
           <PieChart width={400} height={300}>
             <Pie

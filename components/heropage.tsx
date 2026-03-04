@@ -31,7 +31,7 @@ const BankTrackerHero = ({ status }) => {
   return (
     <div className="min-h-screen bg-[#050310] relative text-white"  >
       {/* Header */}
-      <header className=" w-[60%] max-md:w-[90%] bg-[#ffffff11] navbaranimation  border border-[#ffffff29] shadow-xl h-[65px] backdrop-blur-xl z-30 fixed top-10 max-md:top-6 rounded-4xl left-[20%] max-md:left-[5%]  px-6 py-3">
+      <header className=" w-[60%] max-md:w-[90%] bg-[#ffffff11] navbaranimation  border border-[#ffffff29] shadow-xl h-[65px] max-md:[30px] backdrop-blur-xl z-30 fixed top-10 max-md:top-6 rounded-4xl left-[20%] max-md:left-[5%]  px-6 py-3">
 
         <nav className="flex items-center justify-between mx-auto">
           <div className="flex items-center space-x-2">

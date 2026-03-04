@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap');
 @import "tailwindcss";
-body { 
-  background-color: #181825;
-  /* background-color: #13131e; */
+body {  
+  background-color: #0f0f17;
   color: #cdd6f4;
   font-family: monospace , 'Noto Sans Mono';
 }
@@ -30,10 +29,11 @@ body {
   background-color:#89dceb;
 }
 .card{
-  background-color: #181825;
+  background-color: #13131d;
+  background: linear-gradient(320deg, #101018 50%, #181826 95%);
 }
 .bordercolor{
-  border-color: #313244;
+  border-color: #31324474;
 }
  
 @keyframes pulseShimmer {
@@ -283,8 +283,8 @@ clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
    line-height: 0.92 !important;  
 }
 .credittext{
-  @apply text-transparent bg-clip-text bg-gradient-to-tr from-green-500 to-green-700;
+  @apply text-transparent bg-clip-text bg-gradient-to-tr from-green-400 to-green-700;
 }
 .debittext{
-  @apply text-transparent bg-clip-text bg-gradient-to-tr from-red-500 to-red-700;
+  @apply text-transparent bg-clip-text bg-gradient-to-tr from-red-400 to-red-700;
 }

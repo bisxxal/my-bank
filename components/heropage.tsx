@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { calendarData, currentMonth, daysOfWeek, expenseData, generateCalendarDays, monthlyData, trendData } from "@/lib/dummy";
 import Image from 'next/image';
 import ShinyText from './ui/Shinetext';
- 
+
+
 const features = [
   { icon: Mail, label: "Email Tracking", sub: "Auto-fetch from inbox", color: "#22d3ee", bg: "rgba(34,211,238,0.1)" },
   { icon: PieChartIcon, label: "Smart Categories", sub: "AI-powered sorting", color: "#a78bfa", bg: "rgba(167,139,250,0.1)" },
@@ -15,14 +16,59 @@ const features = [
   { icon: Zap, label: "Instant Alerts", sub: "Smart notifications", color: "#f472b6", bg: "rgba(244,114,182,0.1)" },
   { icon: Shield, label: "Bank Security", sub: "256-bit encryption", color: "#60a5fa", bg: "rgba(96,165,250,0.1)" },
 ];
+  
 
-const BankTrackerHero = ({ status }) => {
-  const featRef = useRef(null); 
+const IPhoneCom = () => {
+  const [offset, setOffset] = useState(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollValue = window.scrollY * 0.2
+      //   limit max movement to 10px
+      setOffset(Math.min(scrollValue, 150))
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   return (
-    <div className="min-h-screen  relative text-white"  >
+    <div className='relative h-[40%] max-md:h-full mx-auto'>
+      
+      <h1 className='-mt-3 max-md:mt-4 ml-2'>
+        <ShinyText
+          text="Finances"
+          disabled={false}
+          speed={2}
+          className='followtext text-shadow-2xs text-center text-[15vw] uppercase'
+        />
+      </h1>
+
+      <div className="absolute inset-0 rounded-3xl top-0 blur-3xl left-0 w-full bg-gradient-to-t from-[#5988f5] via-transparent" />
+
+      <img
+        className=' mation w-[45%] mx-auto max-md:w-full -mt-52 max-md:-mt-24 drop-shadow-2xl drop-shadow-black'
+        src="/bg2.png"
+        alt=""
+        height={1900}
+        width={1600}
+        style={{
+          transform: `translateY(${offset}px)`  
+        }}
+      />
+    </div>
+  )
+}
+
+
+
+const BankTrackerHero = ({ status }) => {
+  const featRef = useRef(null);
+
+  return (
+    <div className="min-h-screen relative text-white"  >
       {/* Header */}
-      <header className=" w-[60%] max-md:w-[90%] bg-[#ffffff11] navbaranimation  border border-[#ffffff29] shadow-xl h-[65px] max-md:[30px] backdrop-blur-xl z-30 fixed top-10 max-md:top-6 rounded-4xl left-[20%] max-md:left-[5%]  px-6 py-3">
+      <header className=" w-[60%] max-md:w-[90%] bg-[#ffffff0a] navbaranimation shadow-xl h-[65px] max-md:[30px] backdrop-blur-2xl z-30 fixed top-10 max-md:top-6 rounded-4xl left-[20%] max-md:left-[5%]  px-6 py-3">
 
         <nav className="flex items-center justify-between mx-auto">
           <div className="flex items-center space-x-2">
@@ -38,33 +84,26 @@ const BankTrackerHero = ({ status }) => {
           </div>
         </nav>
       </header>
- 
-      <section className="relative px-6 max-md:px-2 py-20   overflow-hidden">
-        
+
+      <section className="relative px-10 max-md:px-2 py-20   overflow-hidden">
+
         <div className="relative pt-[60px] z-10  mx-auto">
           <div className=" gap-12 items-center">
+ 
             <div className="">
-              <div>
-                <h1 className=" followtext text-2xl max-md:text-xl animate-scale-up delay-700 font-bold leading-tight text-center ">Track Your</h1>
-                <h1 className=' max-md:text-sm followtext text-right'>Like Never Before</h1>
-                
-                <h1 className=' text-center'>
-                  <ShinyText
-                    text="Finances"
-                    disabled={false}
-                    speed={2}
-                    className='followtext text-shadow-2xs   text-center text-[14vw]  uppercase  '
-                  />
-                </h1>
+              <div className=' '>
+                <h1 className=" followtext ml-2 text-7xl max-md:text-5xl animate-scale-up delay-700 font-bold leading-tight  ">Track Your</h1>
+  
+                  {/* <ChatCon /> */}
 
-                <div className='w-[80%] max-md:w-[95%] mx-auto'>
-                <ChatCon />
-                </div>
+                  <IPhoneCom />
+                <h1 className=' max-md:text-4xl ml-2 text-6xl followtext '>Like Never Before</h1>
 
-              </div> 
+
+              </div>
 
               <div className=" my-10 ">
-                <Link href={`/login`} className="buttonbg px-8 max-md:px-4 py-4 max-md:py-2  max-md:text-base followtext   rounded-full text-white font-medium hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
+                <Link href={`/login`} className="buttonbg ml-2 px-8 max-md:px-4 py-4 max-md:py-2  max-md:text-base followtext   rounded-full text-white font-medium hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
                   <Plus className="w-5 h-5 inline mr-2" />
                   Start Tracking Now
                 </Link>
@@ -73,13 +112,13 @@ const BankTrackerHero = ({ status }) => {
 
             {/* debit vs credit */}
             <div className="mt-10 ">
-              
+
               <div style={{ transition: "all 1s cubic-bezier(.16,1,.3,1) 0.2s" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 16 }}>
                   <StatCard color="#34d399" icon={TrendingUp} label="Total Income" value="₹32,400" trend="+12% this month" dir="↗ " />
                   <StatCard color="#f87171" icon={TrendingDown} label="Total Expenses" value="₹23,100" trend="-5% this month" dir="↘ " />
                 </div>
-                 
+
               </div>
 
             </div>
@@ -100,10 +139,10 @@ const BankTrackerHero = ({ status }) => {
             <p className=' font-sans text-[#6b7280] max-w-[460] mx-auto max-md:text-sm '  >Comprehensive tools to track, analyze, and optimize your spending habits</p>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(155px, 1fr))", gap: 14, transition: "all 0.9s cubic-bezier(.16,1,.3,1) 0.15s" }}>
+          <div className=' grid grid-cols-6 gap-10 max-md:grid-cols-2 max-md:gap-3' style={{   transition: "all 0.9s cubic-bezier(.16,1,.3,1) 0.15s" }}>
             {features.map((f, i) => <FeatCard key={i} feat={f} i={i} />)}
           </div>
- 
+
         </div>
       </section>
 
@@ -117,7 +156,7 @@ const BankTrackerHero = ({ status }) => {
               Take Control of Your{" "}
               <span style={{ background: "linear-gradient(135deg,#a78bfa,#22d3ee)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Financial Future</span>
             </h2>
-            <p  className ="max-md:text-sm text-base text-[#9ca3af] " >
+            <p className="max-md:text-sm text-base text-[#9ca3af] " >
               Join thousands of users who have transformed their financial habits with BankTracker
             </p>
             <div style={{ display: "flex", gap: 2, justifyContent: "center", flexWrap: "wrap" }}>
@@ -130,7 +169,7 @@ const BankTrackerHero = ({ status }) => {
     </div>
   );
 };
- 
+
 const ChatCon = () => {
   const [animationStep, setAnimationStep] = useState(0);
   useEffect(() => {
@@ -142,8 +181,8 @@ const ChatCon = () => {
   return (
     <div className=' relative   rounded-3xl'>
 
-       <div className="absolute inset-0 rounded-3xl top-0 blur-3xl left-0 w-full bg-gradient-to-t  -full from-[#5988f5] via-transparent  " />  
- 
+      <div className="absolute inset-0 rounded-3xl top-0 blur-3xl left-0 w-full bg-gradient-to-t  -full from-[#5988f5] via-transparent  " />
+
       <div className="followtext animate-slide-up  -mt-[50px] max-md:-mt-[15px]  bg-white/1 backdrop-blur-[30px] h-[500px] max-md:h-[480px] rounded-3xl p-6 border border-white/10">
         {animationStep === 0 && (
           <div className="space-y-4">

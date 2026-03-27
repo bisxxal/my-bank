@@ -51,11 +51,11 @@ const SignInPage = () => {
           <p style={{ color: "#9ca3af", fontSize: 15, lineHeight: 1.6 }}>Secure. Simple. Smart.<br /><span style={{ fontSize: 13, color: "#6b7280" }}>Track your finances with confidence</span></p>
         </div>
  
-        <div className=" animate-fade-in " style={{ background: "linear-gradient(135deg, rgba(167,139,250,0.09), rgba(96,165,250,0.05))", border: "1px solid rgba(167,139,250,0.2)", borderRadius: 28, padding: "40px 36px", backdropFilter: "blur(24px)", boxShadow: "0 32px 80px rgba(0,0,0,0.5)", position: "relative", overflow: "hidden" }}>
+        <div className="  animate-fade-in " style={{ background: "linear-gradient(135deg, rgba(167,139,250,0.09), rgba(96,165,250,0.05))", border: "1px solid rgba(167,139,250,0.2)", borderRadius: 28, padding: "40px 36px", backdropFilter: "blur(24px)", boxShadow: "0 32px 80px rgba(0,0,0,0.5)", position: "relative", overflow: "hidden" }}>
          
           <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "radial-gradient(circle, rgba(167,139,250,0.18), transparent 70%)", pointerEvents: "none" }} />
 
-          <div style={{ textAlign: "center", marginBottom: 28 }}>
+          <div className=" " style={{ textAlign: "center", marginBottom: 28 }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(167,139,250,0.1)", border: "1px solid rgba(167,139,250,0.25)", borderRadius: 100, padding: "6px 16px", marginBottom: 18 }}>
               <Lock size={13} style={{ color: "#a78bfa" }} />
               <span style={{ fontSize: 12, color: "#a78bfa", fontWeight: 600, letterSpacing: "0.5px" }}>OAuth 2.0 Protected</span>

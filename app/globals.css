@@ -29,13 +29,8 @@ body {
 .accent{
   background-color:#89dceb;
 }
-.card{
-  /* background-color: #13131d; */
-  background-color: #060B18;
-  /* background-color: #0D1322;  */
-  /* background: linear-gradient(320deg, #101018 50%, #181826 95%); */
-  /* background: linear-gradient(350deg, #060B18 40%, #181b23 105%); */
-
+.card{ 
+  background-color: #050a15;  
   background-image: linear-gradient(45deg, #11182777 25%, #03071277 25%, #03071277 50%, #11182777 50%, #11182777 75%, #03071277 75%, #03071277 100%);
   background-size: 5px 5px;
 }
@@ -298,6 +293,6 @@ clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
 }
 .debittext{
   @apply text-transparent bg-clip-text bg-gradient-to-br from-red-400/80 to-red-800;
-   /* font-family:   sans-serif ; */
+   
 }
 

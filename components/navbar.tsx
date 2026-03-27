@@ -24,8 +24,10 @@ const Navbar = () => {
     };
   }, []);
   return (
-    <div ref={ref} className='z-[100] w-full top-0  left-0 fixed backdrop-blur-xl h-[60px] flex items-center justify-center '>
-      <div className=' w-full max-md:px-2 px-4 flex items-center justify-between'>
+    <div ref={ref} className='z-[100] w-full top-0 left-0 fixed  '> 
+
+      <div className='backdrop-blur-xl border border-[#ffffff0f] h-[60px] mt-4 w-[90%] mx-auto pr-2 rounded-3xl flex items-center justify-center '> 
+      <div className=' w-full max-md:px-2  px-4 flex items-center justify-between'>
         <Link href={session?.user ? '/transaction' : '/'} className='max-md:text-xl  text-2xl center font-bold'>
           <Image src='/bank.png' alt='logo' width={40} height={40} className='hover:scale-125 drop-shadow-[0_5px_10px_rgba(0,0,0,0.25)] drop-shadow-amber-100  transition-all inline-block ml-2' />
         </Link>
@@ -62,6 +64,8 @@ const Navbar = () => {
             </Link>
           )}
         </div>}
+      </div>
+
       </div>
     </div>
   )

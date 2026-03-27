@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400;500&display=swap');
 @import "tailwindcss";
 body {  
-  background-color: #0f0f17;
+  /* background-color: #0f0f17; */
+  background-color: #030712;
   color: #cdd6f4;
   font-family: monospace , 'Noto Sans Mono';
 }
@@ -29,8 +30,14 @@ body {
   background-color:#89dceb;
 }
 .card{
-  background-color: #13131d;
-  background: linear-gradient(320deg, #101018 50%, #181826 95%);
+  /* background-color: #13131d; */
+  background-color: #060B18;
+  /* background-color: #0D1322;  */
+  /* background: linear-gradient(320deg, #101018 50%, #181826 95%); */
+  /* background: linear-gradient(350deg, #060B18 40%, #181b23 105%); */
+
+  background-image: linear-gradient(45deg, #11182777 25%, #03071277 25%, #03071277 50%, #11182777 50%, #11182777 75%, #03071277 75%, #03071277 100%);
+  background-size: 5px 5px;
 }
 .bordercolor{
   border-color: #31324474;
@@ -49,6 +56,8 @@ body {
   @apply bg-gradient-to-br from-[#818cf8] font-medium to-[#a78bfa];
   transition: all 0.3s ease-in-out;
   box-shadow: inset -12px -3px 20px 2px #00000021, 0 8px 10px -6px rgb(0 0 0 / 0.1) ;
+
+   background: linear-gradient(171deg, #9EACFA 0%, #4959f9 90% );
 }
 .buttonbg:hover { box-shadow:0 0 36px rgba(167,139,250,0.55); transform:translateY(-2px); }
  
@@ -131,8 +140,10 @@ button:hover , a:hover{
       border: 1px solid #f871717e;
 }
 .bankbg{
-   background: linear-gradient(135deg, #215bee35, #215bee0d);
-      border: 1px solid #215bee40;
+   /* background: linear-gradient(135deg, #215bee35, #215bee0d); */
+   background: linear-gradient(180deg, #9EACFA, #4959f9);
+   background-color: #9EACFA;
+      color: #060B18 !important;
 }
 
 .navbaranimation{
@@ -267,7 +278,7 @@ background: radial-gradient(circle,#b88244e0 0%, #dccfb53b 100%);
 
 .buttombar{
   background: #57c786;
-background: linear-gradient(180deg, #57c78500 0%, #0b0b12 100%);
+background: linear-gradient(180deg, #57c78500 0%, #030712 100%);
 }
 
  
@@ -283,8 +294,10 @@ clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
    line-height: 0.92 !important;  
 }
 .credittext{
-  @apply text-transparent bg-clip-text bg-gradient-to-tr from-green-400 to-green-700;
+  @apply text-transparent bg-clip-text bg-gradient-to-br from-green-400/80 to-green-800;
 }
 .debittext{
-  @apply text-transparent bg-clip-text bg-gradient-to-tr from-red-400 to-red-700;
+  @apply text-transparent bg-clip-text bg-gradient-to-br from-red-400/80 to-red-800;
+   /* font-family:   sans-serif ; */
 }
+

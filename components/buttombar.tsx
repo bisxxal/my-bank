@@ -36,14 +36,15 @@ const BottomBar = () => {
     }, [path])
 
     return (
-        <div className='fixed bottom-0 z-[100] w-full flex justify-center gap-5 h-[80px] pointer-events-none'>
+        <div className='fixed bottom-0 z-[100]  buttombar w-full flex justify-center gap-5 h-[80px] pointer-events-none'>
 
-            {/* Main Nav */}
+
+ 
             <div className='pointer-events-auto backdrop-blur-[10px] bg-[#ffffff08] relative flex items-center p-2 border border-[#d3d3d325] mb-6 rounded-full'>
 
                 {pillStyle.opacity === 1 && (
                     <div
-                        className="absolute h-[calc(100%-10px)] top-1 rounded-full bg-[#6b11c49d] transition-all duration-500 ease-in-out -z-10"
+                        className="absolute h-[calc(100%-10px)] top-1 rounded-full bg-[#7C86FF] transition-all duration-500 ease-in-out -z-10"
                         style={{
                             left: `${pillStyle.left}px`,
                             width: `${pillStyle.width}px`,
@@ -71,15 +72,14 @@ const BottomBar = () => {
                         </Link>
                     )
                 })}
-            </div>
-
+            </div> 
             {/* Profile Button */}
             <div className='pointer-events-auto backdrop-blur-[10px] bg-[#ffffff08] relative flex items-center  border border-[#d3d3d325] mb-6 rounded-full'>
                 <Link
                     ref={profileRef}
                     href='/profile'
                     className={`relative w-14 h-full center rounded-full transition-all duration-300 hover:-translate-y-1 hover:scale-110 ${
-                        path === '/profile' ? 'bg-[#6b11c49d] border-none text-white' : 'text-[#d3d3d3b4] hover:text-white'
+                        path === '/profile' ? ' bg-[#7C86FF] border-none text-white' : 'text-[#d3d3d3b4] hover:text-white'
                     }`}
                 >
                     <User size={24} />

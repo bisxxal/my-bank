@@ -250,12 +250,15 @@ const TransactionPage = () => {
               const percentage = i.creditAmount > 0 ? (balance / i.creditAmount) * 100 : 0;
               const isPositive = balance >= 0;
               return (
-                <div key={index} className='  bankbg font-medium  rounded-3xl flex flex-col !items-start !justify-start max-md:min-w-[200px] min-w-[250px] p-4'>
-                  <p className='w-full text-center   text-xl text-white font-bold'>{i.bank} </p>
-                  {i.credit && <p className='w-full credittext'>Credit: ₹{i.creditAmount.toFixed(2)}</p>}
-                  {i.debit && <p className='w-full debittext'>Debit: ₹{i.debitAmount.toFixed(2)}</p>}
-                  <p className='w-full text-gray-100 flex items-center gap-2'>Total: {balance.toFixed(2)}{' '}</p>
-                  {percentage ? <p className={`font-semibold ${isPositive ? "credittext " : " debittext "} center `}> {isPositive ? <TrendingUp className=' text-green-400' size={20} /> : <TrendingDown className=' text-red-500' size={20} />} {percentage.toFixed(2)}%</p> : ''}
+                <div key={index}
+                className='  bankbg font-medium overflow-hidden rounded-3xl flex flex-col !items-start !justify-start max-md:min-w-[200px] min-w-[250px] '>
+                  <p className='w-full text-center --4 bg-[#818CF8] text-xl font-bold'>{i.bank} </p>
+                  <div className=' flex flex-col !items-start !justify-start p-4'>
+                  {i.debit && <p className='w-full text-red-500'>Debit: ₹{i.debitAmount.toFixed(2)}</p>}
+                  {i.credit && <p className='w-full  text-green-400 '>Credit: ₹{i.creditAmount.toFixed(2)}</p>}
+                  <p className='w-full text-indigo-950 -500 100 flex items-center gap-2'>Total: {balance.toFixed(2)}{' '}</p>
+                  {percentage ? <p className={`font-semibold ${isPositive ? " text-green-400 " : " text-red-500 "} center `}> {isPositive ? <TrendingUp className=' text-green-400' size={20} /> : <TrendingDown className=' text-red-500' size={20} />} {percentage.toFixed(2)}%</p> : ''}
+                  </div>
                 </div>
               );
             })}

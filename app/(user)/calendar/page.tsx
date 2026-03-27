@@ -57,7 +57,7 @@ const CalendarPage = () => {
           <div
             key={d}
             className={`text-center mt-2 max-md:mt-0 rounded-lg max-md:rounded-none w-full  h-40 max-md:h-28  flex flex-col hover:border-[white] items-start 
-              ${isToday ? 'bg-blue-50 buttonbg text-white font-bold' : 'border hover:bg-[#222233] card bordercolor   '
+              ${isToday ? 'bg-blue-50 buttonbg text-white font-bold' : 'border hover:bg-[#222233] bg-[#060B18]  bordercolor   '
               }`}
           >
             <h1 className='items-start px-2 pt-1 justify-start w-ful h-1/2 font-extrabold text-4xl max-md:text-xl'>  {d}</h1>
@@ -153,7 +153,7 @@ const CalendarPage = () => {
           {daysOfWeek.map((day) => (
             <div
               key={day}
-              className="font-semibold w-full h-10 card bordercolor center rounded  max-md:rounded-none border   text-gray-400"
+              className="font-semibold w-full h-10 bg-[#060B18] bordercolor center rounded  max-md:rounded-none border   text-gray-400"
             >
               {day}
             </div>

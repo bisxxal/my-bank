@@ -6,16 +6,8 @@ import Link from 'next/link';
 import { calendarData, currentMonth, daysOfWeek, expenseData, generateCalendarDays, monthlyData, trendData } from "@/lib/dummy";
 import Image from 'next/image';
 import ShinyText from './ui/Shinetext';
-
-function useInView(ref) {
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) setInView(true); }, { threshold: 0.15 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, []);
-  return inView;
-} const features = [
+ 
+const features = [
   { icon: Mail, label: "Email Tracking", sub: "Auto-fetch from inbox", color: "#22d3ee", bg: "rgba(34,211,238,0.1)" },
   { icon: PieChartIcon, label: "Smart Categories", sub: "AI-powered sorting", color: "#a78bfa", bg: "rgba(167,139,250,0.1)" },
   { icon: CreditCard, label: "Statements", sub: "Credit & Debit", color: "#34d399", bg: "rgba(52,211,153,0.1)" },
@@ -25,11 +17,10 @@ function useInView(ref) {
 ];
 
 const BankTrackerHero = ({ status }) => {
-  const featRef = useRef(null);
-  const featInView = useInView(featRef);
+  const featRef = useRef(null); 
 
   return (
-    <div className="min-h-screen bg-[#050310] relative text-white"  >
+    <div className="min-h-screen  relative text-white"  >
       {/* Header */}
       <header className=" w-[60%] max-md:w-[90%] bg-[#ffffff11] navbaranimation  border border-[#ffffff29] shadow-xl h-[65px] max-md:[30px] backdrop-blur-xl z-30 fixed top-10 max-md:top-6 rounded-4xl left-[20%] max-md:left-[5%]  px-6 py-3">
 
@@ -47,8 +38,7 @@ const BankTrackerHero = ({ status }) => {
           </div>
         </nav>
       </header>
-
-      {/* Hero Section */}
+ 
       <section className="relative px-6 max-md:px-2 py-20   overflow-hidden">
         
         <div className="relative pt-[60px] z-10  mx-auto">
@@ -63,7 +53,7 @@ const BankTrackerHero = ({ status }) => {
                     text="Finances"
                     disabled={false}
                     speed={2}
-                    className='followtext text-shadow-2xs   text-center text-[14vw]  uppercase text-[#A18BFA] '
+                    className='followtext text-shadow-2xs   text-center text-[14vw]  uppercase  '
                   />
                 </h1>
 
@@ -152,7 +142,7 @@ const ChatCon = () => {
   return (
     <div className=' relative   rounded-3xl'>
 
-       <div className="absolute inset-0 rounded-3xl top-0 blur-3xl left-0 w-full bg-gradient-to-t  -full from-[#CBA6F7] via-transparent  " />  
+       <div className="absolute inset-0 rounded-3xl top-0 blur-3xl left-0 w-full bg-gradient-to-t  -full from-[#5988f5] via-transparent  " />  
  
       <div className="followtext animate-slide-up  -mt-[50px] max-md:-mt-[15px]  bg-white/1 backdrop-blur-[30px] h-[500px] max-md:h-[480px] rounded-3xl p-6 border border-white/10">
         {animationStep === 0 && (

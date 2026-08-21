@@ -4,6 +4,7 @@ export function extractFromEmail(fullName: string): string {
 }
 
 export const banks = [
+    { value: 'CASH', name: 'Cash 💸' },
     { value: 'HDFCBANK', name: 'HDFC Bank' },
     { value: 'KOTAK', name: 'Kotak Mahindra Bank' },
     { value: 'SBI', name: 'State Bank of India' },
@@ -29,10 +30,12 @@ export const banks = [
 export const categories = [
     { value: 'snacks', name: 'Snacks' },
     { value: 'breakfast', name: 'Breakfast' },
+    { value: 'lunch', name: 'Lunch' },
     { value: 'dinner', name: 'Dinner' },
     { value: 'colddrinks', name: 'Cold drinks' },
     { value: 'entertainment', name: 'Entertainment' },
     { value: 'purchases', name: 'Online Purchases' },
+    { value: 'otherpurchases', name: 'Other Purchases' },
     { value: 'education', name: 'Education' },
     { value: 'recharge', name: 'Recharge' },
     { value: 'travels', name: 'Travels' },

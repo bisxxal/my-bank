@@ -86,23 +86,19 @@ const TrackerPage = () => {
       <DateButton startDate={startDate} endDate={endDate} setStartDate={setStartDate} setEndDate={setEndDate} />
       <div>
 
-        <div className='flex justify-evenly w-full flex-warp gap-3 items-center my-4'>
-          <div className='flex flex-col items-center  creditbg   center  h-[150px] w-[300px] rounded-3xl'>
+        <div className='flex justify-evenly w-full flex-warp gap- items-center my-4'>
+          <div className='flex flex-col items-center  creditbg   center  h-[120px] w-[300px] rounded-l-4xl'>
             <h2 className='max-md:text-sm center gap-2'>Total Credited
-              <div className='bg-[#34d39930] px-2 py-2 rounded-2xl'>
-              <TrendingUp size={25} className="text-[#34d399]" /> 
-              </div>
+              
               </h2>
-            <p className=' credittext max-md:text-2xl text-3xl font-bold'>₹{totalCredit.toFixed(2)}</p>
+            <p className=' max-md:text-3xl text-5xl font-bold'>₹{totalCredit.toFixed(2)}</p>
           </div>
-          <div className='flex flex-col items-center   debitbg   center   h-[150px] w-[300px] rounded-3xl'>
+          <div className='flex flex-col items-center   debitbg   center   h-[120px] w-[300px] rounded-r-4xl'>
             <h2 className='max-md:text-sm center gap-2 '>
               Total Debited
-              <div className='bg-[#f8717130] px-2 py-2 rounded-2xl'>
-              <TrendingDown size={25} className="text-[#f87171] " />
-              </div>
+             
             </h2>
-            <span className='debittext max-md:text-2xl text-3xl font-bold'>₹{totalDebit.toFixed(2)} </span>
+            <span className='max-md:text-3xl text-5xl font-bold'>₹{totalDebit.toFixed(2)} </span>
           </div>
         </div>
 
@@ -181,7 +177,7 @@ const TrackerPage = () => {
       </div>
       <div className=' w-full h-[400px] border bordercolor rounded-3xl mb-4 card p-2 px-4 max-md:px-1 max-md:tex-xs'>
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart width={730} height={250} data={barData}>
+          <BarChart width={730}  height={250} data={barData}>
             {/* <CartesianGrid strokeDasharray="0 0 " /> */}
             <XAxis dataKey="name" fontSize={10} />
             <YAxis />
@@ -198,8 +194,8 @@ const TrackerPage = () => {
                 fontWeight: 'bold',
               }} />
             <Legend />
-            <Bar dataKey="credit" fill="#cba6f7" name={'credit'} />
-            <Bar dataKey="debit" fill="#ef1d5c" name={'debit'} />
+            <Bar dataKey="credit" fill="#cba6f7" radius={[4, 4, 0, 0]} name={'credit'} />
+            <Bar dataKey="debit" fill="#ef1d5c" radius={[4, 4, 0, 0]} name={'debit'} />
           </BarChart>
         </ResponsiveContainer >
 

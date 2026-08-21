@@ -128,19 +128,19 @@ const CalendarPage = () => {
           </div>
 
           <div className=' max-md:w-full  flex gap-2 items-center'>
-            <div className='flex flex-col items-center   creditbg center max-md:w-[170px] h-[60px] w-[150px] rounded-xl'>
+            <div className='flex flex-col items-center   creditbg center max-md:w-[170px] h-[60px] w-[150px] rounded-2xl'>
               <h2 className='max-md:text-sm center gap-2'>Total Credited </h2>
 
-              <p className=' credittext   max-md:text-lg text-xl font-bold'> ₹{monthData
+              <p className=' max-md:text-lg text-xl font-bold'> ₹{monthData
                 .filter(item => item.name === 'credit')
                 .reduce((acc, curr) => acc + curr.amount, 0)
                 .toFixed(2)}</p>
             </div>
-            <div className='flex flex-col items-center  debitbg   center max-md:w-[170px]  h-[60px] w-[150px] rounded-xl'>
+            <div className='flex flex-col items-center  debitbg   center max-md:w-[170px]  h-[60px] w-[150px] rounded-2xl'>
               <h2 className='max-md:text-sm center gap-2'>
                 Total Debited
               </h2>
-              <span className='debittext max-md:text-lg text-xl font-bold'>₹{monthData
+              <span className='  max-md:text-lg text-xl font-bold'>₹{monthData
                 .filter(item => item.name === 'debit')
                 .reduce((acc, curr) => acc + curr.amount, 0)
                 .toFixed(2)}

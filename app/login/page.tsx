@@ -28,41 +28,39 @@ const SignInPage = () => {
 
   else{
     return (
-    <div className=" bg-[#050310]" style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, position: "relative", overflow: "hidden" }}>
+    <div   style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", padding: 24, position: "relative", overflow: "hidden" }}>
       
       <div style={{ position: "relative", zIndex: 1, maxWidth: 440, width: "100%", opacity: mounted ? 1 : 0, transform: mounted ? "none" : "translateY(36px)", transition: "all 0.9s cubic-bezier(.16,1,.3,1)" }}>
 
 
         <div className=" animate-slide-up text-center mb-[36px] " >
           <div className=" animate-slide-up" style={{ display: "inline-block", animation: "float 4s ease-in-out infinite", marginBottom: 20, position: "relative" }}>
-            <div  style={{ width: 100, height: 100, borderRadius: "50%", background: "linear-gradient(135deg, rgba(167,139,250,0.2), rgba(96,165,250,0.1))", border: "1px solid rgba(167,139,250,0.3)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto", backdropFilter: "blur(12px)" }}>
+            <div   >
               <Image src='/bank.png' alt='logo' width={60} height={60} style={{ filter: "drop-shadow(0 4px 12px rgba(167,139,250,0.4))" }} />
             </div>
              
-            <div style={{ position: "absolute", inset: -10, borderRadius: "50%", border: "1px dashed rgba(167,139,250,0.2)", animation: "spin-slow 12s linear infinite" }} />
-          </div>
+           </div>
 
-          <h1 style={{ fontFamily: "'Syne',sans-serif", fontSize: "clamp(30px,5vw,42px)", fontWeight: 800, color: "white", letterSpacing: "-1.5px", lineHeight: 1.1, marginBottom: 12 }}>
+          <h1 className="followtext" style={{  fontSize: "clamp(30px,5vw,42px)", fontWeight: 800, color: "white", letterSpacing: "-1.5px", lineHeight: 1.1, marginBottom: 12 }}>
             Welcome to{" "}
             <span style={{ background: "linear-gradient(135deg,#a78bfa,#60a5fa)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                MyBank
             </span>
           </h1>
-          <p style={{ color: "#9ca3af", fontSize: 15, lineHeight: 1.6 }}>Secure. Simple. Smart.<br /><span style={{ fontSize: 13, color: "#6b7280" }}>Track your finances with confidence</span></p>
+          <p style={{ color: "#9ca3af", fontSize: 15, lineHeight: 1.6 }}> <span style={{ fontSize: 13, color: "#6b7280" }}>Track your finances with confidence</span></p>
         </div>
  
         <div className="  animate-fade-in " style={{ background: "linear-gradient(135deg, rgba(167,139,250,0.09), rgba(96,165,250,0.05))", border: "1px solid rgba(167,139,250,0.2)", borderRadius: 28, padding: "40px 36px", backdropFilter: "blur(24px)", boxShadow: "0 32px 80px rgba(0,0,0,0.5)", position: "relative", overflow: "hidden" }}>
          
-          <div style={{ position: "absolute", top: -40, right: -40, width: 160, height: 160, borderRadius: "50%", background: "radial-gradient(circle, rgba(167,139,250,0.18), transparent 70%)", pointerEvents: "none" }} />
+
 
           <div className=" " style={{ textAlign: "center", marginBottom: 28 }}>
             <div style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(167,139,250,0.1)", border: "1px solid rgba(167,139,250,0.25)", borderRadius: 100, padding: "6px 16px", marginBottom: 18 }}>
               <Lock size={13} style={{ color: "#a78bfa" }} />
               <span style={{ fontSize: 12, color: "#a78bfa", fontWeight: 600, letterSpacing: "0.5px" }}>OAuth 2.0 Protected</span>
             </div>
-            <h2 style={{ fontFamily: "'Syne',sans-serif", fontSize: 24, fontWeight: 800, color: "white", letterSpacing: "-0.5px", marginBottom: 6 }}>Sign In</h2>
-            <p style={{ color: "#9ca3af", fontSize: 14 }}>Continue with your Google account</p>
-          </div>
+            <h2  className="followtext" style={{ fontFamily: "'Syne',sans-serif", fontSize: 24, fontWeight: 800, color: "white", letterSpacing: "-0.5px", marginBottom: 6 }}>Sign In</h2>
+           </div>
 
          
           <button
@@ -79,19 +77,7 @@ const SignInPage = () => {
             <span style={{ fontSize: 16, fontWeight: 700, color: "#1f2937" }}>Sign in with Google</span>
           </button>
  
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 10 }}>
-            {[
-              { icon: Shield, label: "Secure", sub: "256-bit SSL", color: "#34d399", bg: "rgba(52,211,153,0.08)" },
-              { icon: Sparkles, label: "Private", sub: "No tracking", color: "#a78bfa", bg: "rgba(167,139,250,0.08)" },
-              { icon: Zap, label: "Instant", sub: "1-click login", color: "#fbbf24", bg: "rgba(251,191,36,0.08)" },
-            ].map(({ icon: Icon, label, sub, color, bg }) => (
-              <div key={label} style={{ background: bg, border: `1px solid ${color}25`, borderRadius: 14, padding: "12px 8px", textAlign: "center" }}>
-                <Icon size={18} style={{ color, margin: "0 auto 6px" }} />
-                <p style={{ fontSize: 12, fontWeight: 600, color: "white", margin: 0 }}>{label}</p>
-                <p style={{ fontSize: 10, color: "#6b7280", margin: "2px 0 0 0" }}>{sub}</p>
-              </div>
-            ))}
-          </div>
+        
         </div>
 
          

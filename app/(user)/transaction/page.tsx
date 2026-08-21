@@ -12,7 +12,7 @@ import { useMutation } from '@tanstack/react-query';
 import { endOfMonth, startOfMonth } from 'date-fns';
 import { ArrowDownLeft, ArrowDownRight, BanknoteArrowUp, Landmark, PiggyBank, RefreshCcw, RefreshCw, TrendingDown, TrendingUp } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { redirect, useRouter } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react'
 
 const TransactionPage = () => {
@@ -24,17 +24,38 @@ const TransactionPage = () => {
 
   const { isOnline } = useNetworkStatus()
   const router = useRouter();
+  const searchParams = useSearchParams();
   const today = new Date();
-  const [startDate, setStartDate] = useState<Date>(startOfMonth(today));
-  const [endDate, setEndDate] = useState<Date>(endOfMonth(today));
+
+  // Derive dates from URL params, fall back to current month
+  const startDate = (() => {
+    const p = searchParams.get('from');
+    return p ? new Date(p) : startOfMonth(today);
+  })();
+  const endDate = (() => {
+    const p = searchParams.get('to');
+    return p ? new Date(p) : endOfMonth(today);
+  })();
+
+  const setStartDate = (date: Date) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('from', date.toISOString().split('T')[0]);
+    router.replace(`?${params.toString()}`);
+  };
+  const setEndDate = (date: Date) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('to', date.toISOString().split('T')[0]);
+    router.replace(`?${params.toString()}`);
+  };
+
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState<string | null>(null);
   const [borrow, setBorrow] = useState([])
 
   const { data, isLoading, refetch,isRefetching } = useGetAllPaymemts(startDate, endDate);
 
-  console.log("DATA:", data);
-  console.log("TYPE:", typeof data);
-  console.log("IS ARRAY:", Array.isArray(data));
+  // console.log("DATA:", data);
+  // console.log("TYPE:", typeof data);
+  // console.log("IS ARRAY:", Array.isArray(data));
 
   const groupedMessages = data   && data?.reduce((acc: Record<string, typeof data>, msg: TransactionTypeProps) => {
     const label = getLabelForDate(String(msg?.date ?? ''));
@@ -245,18 +266,38 @@ const TransactionPage = () => {
         </div>
         {uniqueBanks && !isLoading ?
           <div className='flex w-full hidescrollbar overflow-x-auto py-2 gap-2'>
-            {uniqueBanks.map((i: { bank: string, creditAmount: number, credit: boolean, debit: boolean, debitAmount: number }, index: number) => {
+            {uniqueBanks.length > 0 && (() => {
+               const totalCredit = uniqueBanks.reduce((acc: number, curr: any) => acc + curr.creditAmount, 0);
+               const totalDebit = uniqueBanks.reduce((acc: number, curr: any) => acc + curr.debitAmount, 0);
+               const totalBalance = totalCredit - totalDebit;
+               const totalPercentage = totalCredit > 0 ? (totalBalance / totalCredit) * 100 : 0;
+               const isTotalPositive = totalBalance >= 0;
+
+               return (
+                <div 
+                className='  buttonbg font-medium overflow-hidden rounded-3xl flex flex-col !items-start !justify-start max-md:min-w-[200px] min-w-[250px] '>
+                  <p className='w-full text-center py-1 bg-[#2d12a3] text-xl font-bold'>Total Overview</p>
+                  <div className=' flex flex-col !items-start !justify-start p-4'>
+                    <p className='w-full text-red-500'>Debit: ₹{totalDebit.toFixed(2)}</p>
+                    <p className='w-full text-green-400 '>Credit: ₹{totalCredit.toFixed(2)}</p>
+                    <p className='w-full  100 flex items-center gap-2'>Total: {totalBalance.toFixed(2)}{' '}</p>
+                    {totalPercentage ? <p className={`font-semibold ${isTotalPositive ? " text-green-400 " : " text-red-500 "} center `}> {isTotalPositive ? <TrendingUp className=' text-green-400' size={20} /> : <TrendingDown className=' text-red-500' size={20} />} {totalPercentage.toFixed(2)}%</p> : ''}
+                  </div>
+                </div>
+               );
+            })()}
+             {uniqueBanks.map((i: { bank: string, creditAmount: number, credit: boolean, debit: boolean, debitAmount: number }, index: number) => {
               const balance = i.creditAmount - i.debitAmount;
               const percentage = i.creditAmount > 0 ? (balance / i.creditAmount) * 100 : 0;
               const isPositive = balance >= 0;
               return (
                 <div key={index}
-                className='  bankbg font-medium overflow-hidden rounded-3xl flex flex-col !items-start !justify-start max-md:min-w-[200px] min-w-[250px] '>
-                  <p className='w-full text-center --4 bg-[#818CF8] text-xl font-bold'>{i.bank} </p>
+                className='  buttonbg font-medium overflow-hidden rounded-3xl flex flex-col !items-start !justify-start max-md:min-w-[200px] min-w-[250px] '>
+                  <p className='w-full text-center py-1 bg-[#2d12a3] text-xl font-bold'>{i.bank} </p>
                   <div className=' flex flex-col !items-start !justify-start p-4'>
                   {i.debit && <p className='w-full text-red-500'>Debit: ₹{i.debitAmount.toFixed(2)}</p>}
                   {i.credit && <p className='w-full  text-green-400 '>Credit: ₹{i.creditAmount.toFixed(2)}</p>}
-                  <p className='w-full text-indigo-950 -500 100 flex items-center gap-2'>Total: {balance.toFixed(2)}{' '}</p>
+                  <p className='w-full   flex items-center gap-2'>Total: {balance.toFixed(2)}{' '}</p>
                   {percentage ? <p className={`font-semibold ${isPositive ? " text-green-400 " : " text-red-500 "} center `}> {isPositive ? <TrendingUp className=' text-green-400' size={20} /> : <TrendingDown className=' text-red-500' size={20} />} {percentage.toFixed(2)}%</p> : ''}
                   </div>
                 </div>

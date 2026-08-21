@@ -4,15 +4,47 @@ import useNetworkStatus from '@/hooks/oflinehook';
 import { toastError, toastSuccess } from '@/lib/toast';
 import { banks, categories } from '@/lib/utils';
 import { useMutation } from '@tanstack/react-query';
-import { Loader } from 'lucide-react';
-import React, {   useState } from 'react'
+import { Loader, PlusCircle, X } from 'lucide-react';
+import React, { useState } from 'react'
 import DatePicker from 'react-datepicker';
+
+const CUSTOM_CATEGORIES_KEY = 'custom-categories';
+
+const getCustomCategories = (): { value: string; name: string }[] => {
+  try {
+    return JSON.parse(localStorage.getItem(CUSTOM_CATEGORIES_KEY) || '[]');
+  } catch {
+    return [];
+  }
+};
 
 const CreateTransaction = () => {
 
   const { isOnline } = useNetworkStatus()
   const [type, setType] = useState<'credit' | 'debit'>('debit');
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [customCategories, setCustomCategories] = useState<{ value: string; name: string }[]>(getCustomCategories);
+  const [newCategory, setNewCategory] = useState('');
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
+
+  const allCategories = [...categories, ...customCategories];
+
+  const addCustomCategory = () => {
+    const trimmed = newCategory.trim();
+    if (!trimmed) return;
+    const entry = { value: trimmed.toLowerCase().replace(/\s+/g, '-'), name: trimmed };
+    const updated = [...customCategories, entry];
+    setCustomCategories(updated);
+    localStorage.setItem(CUSTOM_CATEGORIES_KEY, JSON.stringify(updated));
+    setNewCategory('');
+    setShowCategoryInput(false);
+  };
+
+  const removeCustomCategory = (value: string) => {
+    const updated = customCategories.filter(c => c.value !== value);
+    setCustomCategories(updated);
+    localStorage.setItem(CUSTOM_CATEGORIES_KEY, JSON.stringify(updated));
+  };
 
   const handelFormSubmit = (formData: FormData) => {
     if (selectedDate) {
@@ -90,7 +122,7 @@ const CreateTransaction = () => {
           <select name='bank' required
             className="mt-1 block w-full border bordercolor card p-2 rounded-md shadow-sm "
           >
-            <option value="">Select bank</option>
+            {/* <option value="">Select bank</option> */}
             {
               banks.map((i) => {
                 return (
@@ -102,17 +134,76 @@ const CreateTransaction = () => {
         </div>
 
         {type === 'debit' && <div>
-          <label className="block text-sm font-medium ">Category</label>
-          <select name='category'
-            className="mt-1 block w-full border bordercolor card p-2 rounded-md shadow-sm "
-          >
-            <option value="">Select category</option>
-            {categories.map((category) => (
-              <option key={category.value} value={category.value}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+          <label className="block text-sm font-medium mb-1">Category</label>
+
+          {/* Select + toggle button inline */}
+          <div className='flex gap-2 items-center'>
+            <select name='category'
+              className="mt-1 flex-1 border bordercolor card p-2 rounded-md shadow-sm "
+            >
+              <option value="">Select category</option>
+              {allCategories.map((category) => (
+                <option key={category.value} value={category.value}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+            <button
+              type='button'
+              onClick={() => setShowCategoryInput(v => !v)}
+              title={showCategoryInput ? 'Cancel' : 'Add custom category'}
+              className={`mt-1 p-2 rounded-md transition-all border ${
+                showCategoryInput
+                  ? 'border-red-500/40 text-red-400 bg-red-500/10'
+                  : 'border-indigo-500/40 text-indigo-400 bg-indigo-500/10'
+              }`}
+            >
+              {showCategoryInput ? <X size={18} /> : <PlusCircle size={18} />}
+            </button>
+          </div>
+
+          {/* Expandable custom-category panel */}
+          {showCategoryInput && (
+            <div className='mt-3 space-y-2 p-3 rounded-xl border bordercolor card'>
+              {customCategories.length > 0 && (
+                <div className='flex flex-wrap gap-1.5 mb-2'>
+                  {customCategories.map(c => (
+                    <span key={c.value}
+                      className='flex items-center gap-1 text-xs px-2.5 py-1 rounded-full buttonbg text-white font-medium'>
+                      {c.name}
+                      <button
+                        type='button'
+                        onClick={() => removeCustomCategory(c.value)}
+                        className='ml-0.5 hover:text-red-300 transition-colors'
+                        aria-label={`Remove ${c.name}`}
+                      >
+                        <X size={12} />
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
+              <div className='flex gap-2 items-center'>
+                <input
+                  type='text'
+                  value={newCategory}
+                  autoFocus
+                  onChange={e => setNewCategory(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addCustomCategory())}
+                  placeholder='e.g. Gym, Groceries…'
+                  className='flex-1 border bordercolor card p-2 rounded-md shadow-sm text-sm'
+                />
+                <button
+                  type='button'
+                  onClick={addCustomCategory}
+                  disabled={!newCategory.trim()}
+                  className='px-3 py-2 text-sm buttonbg text-white rounded-md disabled:opacity-40 transition-opacity whitespace-nowrap'
+                >
+                  + Add
+                </button>
+              </div>
+            </div>
+          )}
         </div>}
 
         <div>

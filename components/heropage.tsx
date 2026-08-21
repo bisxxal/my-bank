@@ -150,8 +150,7 @@ const BankTrackerHero = ({ status }) => {
       <section style={{ position: "relative", zIndex: 1, padding: "60px 24px 120px" }}>
         <div className=' font-sans' style={{ maxWidth: 680, margin: "0 auto", transition: "all 0.9s cubic-bezier(.16,1,.3,1)" }}>
           <div style={{ background: "linear-gradient(135deg, rgba(167,139,250,0.09), rgba(96,165,250,0.05))", border: "1px solid rgba(167,139,250,0.2)", borderRadius: 32, padding: "56px 40px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-            <div style={{ position: "absolute", top: -60, right: -60, width: 200, height: 200, borderRadius: "50%", background: "radial-gradient(circle, rgba(167,139,250,0.2), transparent 70%)", pointerEvents: "none" }} />
-            <p style={{ fontSize: 12, color: "#a78bfa", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 14 }}>Get started today</p>
+             <p style={{ fontSize: 12, color: "#a78bfa", fontWeight: 600, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 14 }}>Get started today</p>
             <h2 className=" followtext " style={{ fontSize: "clamp(24px,3vw,36px)", fontWeight: 800, marginBottom: 14, letterSpacing: "-1px", lineHeight: 1.15 }}>
               Take Control of Your{" "}
               <span style={{ background: "linear-gradient(135deg,#a78bfa,#22d3ee)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Financial Future</span>

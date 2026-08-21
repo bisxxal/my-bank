@@ -54,7 +54,26 @@ body {
 
    background: linear-gradient(171deg, #9EACFA 0%, #4959f9 90% );
 }
-.buttonbg:hover { box-shadow:0 0 36px rgba(167,139,250,0.55); transform:translateY(-2px); }
+
+.buttonbg {
+ 
+  background: #0a84ffd9;
+  backdrop-filter: blur(20px);
+  background: linear-gradient(325deg, #5032f9, #430affd9);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(95, 121, 251, 0.6);
+  box-shadow:
+    0 4px 16px rgba(10, 132, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.card2 {
+  @apply bg-gradient-to-br text-white from-orange-300 font-medium to-orange-600;
+  box-shadow: inset -6px -6px 20px 2px #0000003b;
+}
+.buttonbg:hover { box-shadow:0 0 26px rgba(167,139,250,0.55); transform:translateY(-1px); }
  
 .customclass {
   background-color: #181825c2 !important;
@@ -77,11 +96,11 @@ body {
   color: #ffffff !important;
 }
 .react-datepicker__day--in-selecting-range:hover, .react-datepicker__day--in-range:hover  {
-  background-color: #8f31ff !important;
+  background-color: #430affd9 !important;
   color: #ffffff !important;
 }
-.react-datepicker__day--keyboard-selected{
-  background-color: #8f31ff !important;
+.react-datepicker__day--selected{
+  background-color: #430affd9 !important;
   color: #ffffff !important;
 }
   .react-datepicker__day , .react-datepicker__input-time-container .react-datepicker-time__caption, .react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input {
@@ -89,12 +108,18 @@ body {
 }
 
 .react-datepicker__header {
-  background-color: #7d1deaa3 !important;
+ 
+   background: #0a84ffd9 !important;
   backdrop-filter: blur(20px) !important;
+  background: linear-gradient(325deg, #5032f9, #430affd9) !important;
+   border: 1px solid rgba(95, 121, 251, 0.6) !important;
+  box-shadow:
+    0 4px 16px rgba(10, 132, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+  transition: all 0.2s ease !important;
+    
   color: #cdd6f4 !important;
-  border-color: #313244 !important;
-  box-shadow: inset -12px -3px 20px 2px #00000021, 0 8px 10px -6px rgb(0 0 0 / 0.1) !important ;
-}
+  }
 .react-datepicker__current-month{ 
   color: #ffffff !important;
 }
@@ -125,21 +150,35 @@ button:hover , a:hover{
 .textshadow{
   text-shadow: -2px 1px 20px #ffffff;
 }
+ 
 
-.creditbg{
-    background: linear-gradient(135deg, #34d3992e, #34d39906) ;
-       border: 1px solid #34d39952;
+.creditbg {
+ 
+  background: #60ff0ad9;
+  backdrop-filter: blur(20px);
+  background: linear-gradient(325deg, #32f96e, #4bff0ad9);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(95, 251, 100, 0.6);
+  box-shadow:
+    0 4px 16px rgba(10, 132, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+  color: white;
 }
+
 .debitbg{
-   background: linear-gradient(135deg, #f8717140, #f8717106);
-      border: 1px solid #f871717e;
+    background: #ff0a0ad9;
+    backdrop-filter: blur(20px);
+    background: linear-gradient(325deg, #f93250, #ff0a4bd9);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 10, 47, 0.6);
+    box-shadow:
+      0 4px 16px rgba(255, 10, 83, 0.28),
+      inset 0 1px 0 rgba(255,255,255,0.25);
+    transition: all 0.2s ease;
+    color: white;
 }
-.bankbg{
-   /* background: linear-gradient(135deg, #215bee35, #215bee0d); */
-   background: linear-gradient(180deg, #9EACFA, #4959f9);
-   background-color: #9EACFA;
-      color: #060B18 !important;
-}
+ 
 
 .navbaranimation{
   animation: navbaranimation 0.8s ease-in-out forwards;
@@ -226,10 +265,7 @@ button:hover , a:hover{
   background-clip: text;
   color: transparent;
 }
-.buttongred{
-    background: rgb(17, 17, 17);
-    background: linear-gradient(359deg, #ffffff3b 4%, #090a1500 85%);
-}
+ 
  @keyframes fade-in {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -289,10 +325,156 @@ clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
    line-height: 0.92 !important;  
 }
 .credittext{
-  @apply text-transparent bg-clip-text bg-gradient-to-br from-green-400/80 to-green-800;
+  background: #60ff0ad9;
+  backdrop-filter: blur(20px);
+  background: linear-gradient(325deg, #32f96e, #4bff0ad9);
+  -webkit-backdrop-filter: blur(20px);
+  text-shadow:
+    0 4px 16px rgba(10, 132, 255, 0.28),
+    0 2px 2px #5ffb6499,
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+  @apply text-transparent bg-clip-text ;
 }
 .debittext{
-  @apply text-transparent bg-clip-text bg-gradient-to-br from-red-400/80 to-red-800;
-   
+  background: #0a84ffd9;
+  backdrop-filter: blur(20px);
+  background: linear-gradient(125deg, #f0455f, #ff0a4bd9);
+  -webkit-backdrop-filter: blur(20px); 
+  text-shadow:
+  0 4px 16px rgba(255, 10, 83, 0.28),
+  inset 0 1px 0 rgba(255,255,255,0.25);
+  transition: all 0.2s ease; 
+  @apply text-transparent bg-clip-text ;
 }
 
+/* Bank Card Animations */
+@keyframes bankCardSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(40px) scale(0.92);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(-4px) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes bankCardGlow {
+  0%, 100% { box-shadow: 0 0 12px 0 rgba(129, 140, 248, 0.15); }
+  50% { box-shadow: 0 0 24px 4px rgba(129, 140, 248, 0.3); }
+}
+
+@keyframes bankCardShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.bank-card-animate {
+  opacity: 0;
+  animation: bankCardSlideIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.bank-card {
+  position: relative;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16162a 50%, #1a1a2e 100%);
+  border: 1px solid rgba(129, 140, 248, 0.15);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bank-card:hover {
+  border-color: rgba(129, 140, 248, 0.4);
+  transform: translateY(-4px);
+  animation: bankCardGlow 2s ease-in-out infinite;
+}
+
+.bank-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(129, 140, 248, 0.04) 45%,
+    rgba(129, 140, 248, 0.08) 50%,
+    rgba(129, 140, 248, 0.04) 55%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: bankCardShimmer 4s linear infinite;
+  pointer-events: none;
+}
+
+.bank-card-overview {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%);
+  border-color: rgba(129, 140, 248, 0.3);
+}
+
+.bank-card-overview:hover {
+  border-color: rgba(129, 140, 248, 0.6);
+}
+
+.bank-card-header {
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.bank-card-overview .bank-card-header {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25) 0%, rgba(129, 140, 248, 0.15) 100%);
+  border-bottom-color: rgba(129, 140, 248, 0.15);
+}
+
+.bank-card-body {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bank-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.bank-card-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+  margin: 4px 0;
+}
+
+.bank-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(4px);
+}
+
+.bank-card-badge-positive {
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.bank-card-badge-negative {
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}

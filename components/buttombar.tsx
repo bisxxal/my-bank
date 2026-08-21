@@ -44,7 +44,7 @@ const BottomBar = () => {
 
                 {pillStyle.opacity === 1 && (
                     <div
-                        className="absolute h-[calc(100%-10px)] top-1 rounded-full bg-[#7C86FF] transition-all duration-500 ease-in-out -z-10"
+                        className="absolute h-[calc(100%-10px)] top-1 rounded-full  buttonbg transition-all duration-500 ease-in-out -z-10"
                         style={{
                             left: `${pillStyle.left}px`,
                             width: `${pillStyle.width}px`,
@@ -79,7 +79,7 @@ const BottomBar = () => {
                     ref={profileRef}
                     href='/profile'
                     className={`relative w-14 h-full center rounded-full transition-all duration-300 hover:-translate-y-1 hover:scale-110 ${
-                        path === '/profile' ? ' bg-[#7C86FF] border-none text-white' : 'text-[#d3d3d3b4] hover:text-white'
+                        path === '/profile' ? '  buttonbg border-none text-white' : 'text-[#d3d3d3b4] hover:text-white'
                     }`}
                 >
                     <User size={24} />

@@ -4,7 +4,7 @@ import React from 'react'
 import DatePicker from 'react-datepicker';
 
 const DateButton = ({ startDate, endDate, setEndDate, setStartDate }:
-    { startDate: Date, endDate: Date, setEndDate: React.Dispatch<React.SetStateAction<Date>>, setStartDate: React.Dispatch<React.SetStateAction<Date>> }) => {
+    { startDate: Date, endDate: Date, setEndDate: (date: Date) => void, setStartDate: (date: Date) => void }) => {
     return (
         <div className="flex center !z-[2] flex-warp gap-4 max-md:gap-2 px-4 max-md:px-0 ">
             <div className=' max-md:w-[120px]  '>
